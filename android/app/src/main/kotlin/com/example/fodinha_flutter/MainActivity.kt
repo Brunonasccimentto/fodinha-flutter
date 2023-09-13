@@ -1,0 +1,6 @@
+package com.example.fodinha_flutter
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
