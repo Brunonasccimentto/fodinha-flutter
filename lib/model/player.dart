@@ -6,17 +6,13 @@ part "player.g.dart";
 class PlayerModel {
   Id playerID = Isar.autoIncrement;
   String name;
-  String color;
+  late String color;
   int count = 0;
   int points = 0;
   bool dealer = false;
   String? photo;
 
-  PlayerModel(
-      {required this.name,
-      required this.color,
-      required this.dealer,
-      this.photo});
+  PlayerModel({required this.name});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

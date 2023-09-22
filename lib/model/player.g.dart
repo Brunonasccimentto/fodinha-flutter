@@ -100,12 +100,12 @@ PlayerModel _playerModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = PlayerModel(
-    color: reader.readString(offsets[0]),
-    dealer: reader.readBool(offsets[2]),
     name: reader.readString(offsets[3]),
-    photo: reader.readStringOrNull(offsets[4]),
   );
+  object.color = reader.readString(offsets[0]);
   object.count = reader.readLong(offsets[1]);
+  object.dealer = reader.readBool(offsets[2]);
+  object.photo = reader.readStringOrNull(offsets[4]);
   object.playerID = id;
   object.points = reader.readLong(offsets[5]);
   return object;
