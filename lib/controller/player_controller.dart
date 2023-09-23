@@ -21,11 +21,11 @@ class PlayerController extends ChangeNotifier {
 
   List<PlayerModel> _playerList = [];
   List<PlayerModel> get playerList => _playerList;
-  final List<String> colors = ["amber", "black", "blue", "brown", "cyan", "deepOrange", "deepPurple", "green", "indigo", "pink", "red", "teal"];
+  final List<int> colors = [0xFFFFC107, 0xFF000000, 0xFF2196F3, 0xFF795548, 0xFF00BCD4, 0xFFFF5722, 0xFF673AB7, 0xFF4CAF50, 0xFF3F51B5, 0xFFE91E63, 0xFFF44336, 0xFF009688];
 
   _randomColor(){
     int randomColorIndex = Random().nextInt(colors.length);
-    String randomColor = colors[randomColorIndex];
+    int randomColor = colors[randomColorIndex];
 
     return randomColor;
   }
@@ -34,12 +34,14 @@ class PlayerController extends ChangeNotifier {
 
     if(playerList.length < 10){
       final isarDB = await DatabaseService().openDB();
+      playerList.isEmpty ? player.dealer = true : player.dealer = false;
       player.color = _randomColor();
 
       await isarDB.writeTxn(() async {
-        await isarDB.playerModels.put(player);
+        await isarDB.playerModels.put(player);  
       });
 
+      getPlayerList();
     } 
   }
 

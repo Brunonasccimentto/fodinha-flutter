@@ -1,0 +1,13 @@
+const avatar = ["assets/Multiavatar-0e6d928541840d802f.png",
+   "assets/Multiavatar-1d4869e5f673ca05cb.png",
+   "assets/Multiavatar-5a31af255ed3b8b913.png",
+   "assets/Multiavatar-5c0941fdd17e884bc3.png",
+   "assets/Multiavatar-8d9c509f5e4f605c9c.png",
+   "assets/Multiavatar-49c8c40c360ad127fd.png",
+   "assets/Multiavatar-93f14ee8754ab1975d.png",
+   "assets/Multiavatar-4245f99b19793d87ba.png",
+   "assets/Multiavatar-5785095946b271e9b9.png",
+   "assets/Multiavatar-a8821aab2860402300.png",
+   "assets/Multiavatar-baa4f6eb27a2eb5657.png",
+   "assets/Multiavatar-c1168925e7d2cf838a.png",
+   "assets/Multiavatar-dc0ae43678432dc440.png"];

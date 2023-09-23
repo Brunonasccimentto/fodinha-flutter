@@ -20,7 +20,7 @@ const PlayerModelSchema = CollectionSchema(
     r'color': PropertySchema(
       id: 0,
       name: r'color',
-      type: IsarType.string,
+      type: IsarType.long,
     ),
     r'count': PropertySchema(
       id: 1,
@@ -68,7 +68,6 @@ int _playerModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.color.length * 3;
   bytesCount += 3 + object.name.length * 3;
   {
     final value = object.photo;
@@ -85,7 +84,7 @@ void _playerModelSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.color);
+  writer.writeLong(offsets[0], object.color);
   writer.writeLong(offsets[1], object.count);
   writer.writeBool(offsets[2], object.dealer);
   writer.writeString(offsets[3], object.name);
@@ -102,7 +101,7 @@ PlayerModel _playerModelDeserialize(
   final object = PlayerModel(
     name: reader.readString(offsets[3]),
   );
-  object.color = reader.readString(offsets[0]);
+  object.color = reader.readLong(offsets[0]);
   object.count = reader.readLong(offsets[1]);
   object.dealer = reader.readBool(offsets[2]);
   object.photo = reader.readStringOrNull(offsets[4]);
@@ -119,7 +118,7 @@ P _playerModelDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 1:
       return (reader.readLong(offset)) as P;
     case 2:
@@ -232,55 +231,47 @@ extension PlayerModelQueryWhere
 extension PlayerModelQueryFilter
     on QueryBuilder<PlayerModel, PlayerModel, QFilterCondition> {
   QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> colorEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+      int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'color',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
       colorGreaterThan(
-    String value, {
+    int value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'color',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> colorLessThan(
-    String value, {
+    int value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'color',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> colorBetween(
-    String lower,
-    String upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -289,76 +280,6 @@ extension PlayerModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> colorStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> colorEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> colorContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> colorMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'color',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> colorIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'color',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
-      colorIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'color',
-        value: '',
       ));
     });
   }
@@ -987,10 +908,9 @@ extension PlayerModelQuerySortThenBy
 
 extension PlayerModelQueryWhereDistinct
     on QueryBuilder<PlayerModel, PlayerModel, QDistinct> {
-  QueryBuilder<PlayerModel, PlayerModel, QDistinct> distinctByColor(
-      {bool caseSensitive = true}) {
+  QueryBuilder<PlayerModel, PlayerModel, QDistinct> distinctByColor() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'color', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'color');
     });
   }
 
@@ -1035,7 +955,7 @@ extension PlayerModelQueryProperty
     });
   }
 
-  QueryBuilder<PlayerModel, String, QQueryOperations> colorProperty() {
+  QueryBuilder<PlayerModel, int, QQueryOperations> colorProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'color');
     });

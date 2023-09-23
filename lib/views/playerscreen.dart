@@ -33,6 +33,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amber,
         body: ListenableBuilder(
           listenable: controller,
           builder: (BuildContext context, Widget? child) {
@@ -57,12 +58,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
               shape: const CircleBorder()),
           children: [
             FloatingActionButton(
+              tooltip: "Novo jogador",
               onPressed: () {
                 inputController.text = "";
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                          title: const Text("Novo jogador"),
                           content: CustomField(
                               labelText: "Nome",
                               controller: inputController,
@@ -85,6 +86,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                   controller.createPlayer(
                                       PlayerModel(name: inputController.text));
                                   inputController.text = "";
+                                  Navigator.pop(context);
                                 },
                                 child: const Text("Criar"))
                           ],
@@ -93,13 +95,17 @@ class _PlayerScreenState extends State<PlayerScreen> {
               child: const Icon(
                 Icons.person_add,
                 size: 24,
+                semanticLabel: "Novo jogador",
               ),
             ),
             FloatingActionButton(
               onPressed: () {},
+              tooltip: "Começar",
               child: const Icon(
                 Icons.videogame_asset_rounded,
                 size: 24,
+                semanticLabel: "Começar",
+                textDirection: TextDirection.ltr,
               ),
             )
           ],

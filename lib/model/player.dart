@@ -6,7 +6,7 @@ part "player.g.dart";
 class PlayerModel {
   Id playerID = Isar.autoIncrement;
   String name;
-  late String color;
+  late int color;
   int count = 0;
   int points = 0;
   bool dealer = false;
