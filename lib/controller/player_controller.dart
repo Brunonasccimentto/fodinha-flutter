@@ -3,25 +3,41 @@ import 'package:fodinha_flutter/model/player.dart';
 import 'package:fodinha_flutter/services/database.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-
+import 'package:fodinha_flutter/constants/colors.dart';
 import 'package:isar/isar.dart';
+import 'package:random_avatar/random_avatar.dart';
+import 'package:mobx/mobx.dart';
 
-class PlayerController extends ChangeNotifier {
+part "player_controller.g.dart";
+
+class PlayerController = _PlayerControllerBase with _$PlayerController;
   
-  // String _name = "";
-
-  // void setName(String value) => _name = value;
-  // String get name => _name;
-  // void serColor(String value) => _color = value;
-  // void setCount(int value) => _count = value;
-  // void setPoints(int value) => _points = value;
-  // void setHistoryCount(List value) => _historyCount = value;
-  // void setDealer(bool value) => _dealer = value;
-  // void setPhoto(String? value) => _photo = value;
-
+abstract class _PlayerControllerBase with Store {
+  
+  @observable
   List<PlayerModel> _playerList = [];
+
+  @computed
   List<PlayerModel> get playerList => _playerList;
-  final List<int> colors = [0xFFFFC107, 0xFF000000, 0xFF2196F3, 0xFF795548, 0xFF00BCD4, 0xFFFF5722, 0xFF673AB7, 0xFF4CAF50, 0xFF3F51B5, 0xFFE91E63, 0xFFF44336, 0xFF009688];
+
+  @observable
+  String _svg = "";
+
+  @computed
+  String get svg => _svg;
+
+  @action
+  void setSvg(String svg) {
+    _svg = svg;
+    
+  }
+
+  @action
+  createRandomNewAvatar(){
+    _svg = RandomAvatarString(
+    DateTime.now().toIso8601String(),
+    trBackground: false,);
+  }
 
   _randomColor(){
     int randomColorIndex = Random().nextInt(colors.length);
@@ -30,6 +46,7 @@ class PlayerController extends ChangeNotifier {
     return randomColor;
   }
 
+  @action
   Future<void> createPlayer(PlayerModel player) async{
 
     if(playerList.length < 10){
@@ -41,17 +58,33 @@ class PlayerController extends ChangeNotifier {
         await isarDB.playerModels.put(player);  
       });
 
-      getPlayerList();
+      await getPlayerList();
     } 
   }
 
+  @action
   Future<void> getPlayerList() async{
     final isarDB = await DatabaseService().openDB();
 
       await isarDB.writeTxn(() async {
         _playerList = await isarDB.playerModels.where().findAll();
+        
+      });
+  }
+
+  @action
+  Future<void> updatePhoto(PlayerModel player,String asset) async{
+    final isarDB = await DatabaseService().openDB();
+
+      var updatedPlayer = await isarDB.playerModels.get(player.playerID);
+      updatedPlayer!.photo = asset;
+
+      await isarDB.writeTxn(() async {
+        await isarDB.playerModels.put(updatedPlayer);
       });
 
-      notifyListeners();
+      _svg = "";
+      await getPlayerList();
   }
+
 }

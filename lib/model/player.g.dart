@@ -69,12 +69,7 @@ int _playerModelEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.name.length * 3;
-  {
-    final value = object.photo;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.photo.length * 3;
   return bytesCount;
 }
 
@@ -104,7 +99,7 @@ PlayerModel _playerModelDeserialize(
   object.color = reader.readLong(offsets[0]);
   object.count = reader.readLong(offsets[1]);
   object.dealer = reader.readBool(offsets[2]);
-  object.photo = reader.readStringOrNull(offsets[4]);
+  object.photo = reader.readString(offsets[4]);
   object.playerID = id;
   object.points = reader.readLong(offsets[5]);
   return object;
@@ -126,7 +121,7 @@ P _playerModelDeserializeProp<P>(
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 5:
       return (reader.readLong(offset)) as P;
     default:
@@ -479,25 +474,8 @@ extension PlayerModelQueryFilter
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'photo',
-      ));
-    });
-  }
-
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
-      photoIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'photo',
-      ));
-    });
-  }
-
   QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -511,7 +489,7 @@ extension PlayerModelQueryFilter
 
   QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
       photoGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -526,7 +504,7 @@ extension PlayerModelQueryFilter
   }
 
   QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -541,8 +519,8 @@ extension PlayerModelQueryFilter
   }
 
   QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -979,7 +957,7 @@ extension PlayerModelQueryProperty
     });
   }
 
-  QueryBuilder<PlayerModel, String?, QQueryOperations> photoProperty() {
+  QueryBuilder<PlayerModel, String, QQueryOperations> photoProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'photo');
     });

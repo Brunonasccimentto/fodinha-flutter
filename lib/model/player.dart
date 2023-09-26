@@ -10,7 +10,7 @@ class PlayerModel {
   int count = 0;
   int points = 0;
   bool dealer = false;
-  String? photo;
+  String photo = "";
 
   PlayerModel({required this.name});
 
