@@ -4,7 +4,6 @@ import 'package:fodinha_flutter/components/custom_field.dart';
 import 'package:fodinha_flutter/components/main_list.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
 import 'package:fodinha_flutter/model/player.dart';
-import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -16,33 +15,7 @@ class PlayerScreen extends StatefulWidget {
 
 class _PlayerScreenState extends State<PlayerScreen> {
   final inputController = TextEditingController();
-  final reactionDisposer = <ReactionDisposer>[];
-
-  @override
-  void initState() {
-    super.initState();
-
-    final reactionsDisposer = autorun((_) {
-      print("aqui");
-      setState(() {
-        // players = Provider.of<PlayerViewModel>(context).playerList;
-      });
-      
-    });
-
-    reactionDisposer.add(reactionsDisposer);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    for (var element in reactionDisposer) {
-      element();
-    }
-
-    inputController.dispose();
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
     Future <List<PlayerModel>> players = Provider.of<PlayerViewModel>(context).getPlayerList();

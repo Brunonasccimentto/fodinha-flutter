@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:fodinha_flutter/constants/colors.dart';
 import 'package:fodinha_flutter/model/player_repository.dart';
 import 'package:isar/isar.dart';
-import 'package:random_avatar/random_avatar.dart';
 import 'package:mobx/mobx.dart';
 
 part "player_view_model.g.dart";
@@ -18,25 +17,6 @@ abstract class _PlayerViewModelBase with Store {
 
   @computed
   List<PlayerModel> get playerList => _playerList;
-
-  @observable
-  String _svg = "";
-
-  @computed
-  String get svg => _svg;
-
-  @action
-  void setSvg(String svg) {
-    _svg = svg;
-    
-  }
-
-  @action
-  createRandomNewAvatar(){
-    _svg = RandomAvatarString(
-    DateTime.now().toIso8601String(),
-    trBackground: false,);
-  }
 
   _randomColor(){
     int randomColorIndex = Random().nextInt(colors.length);
@@ -62,6 +42,17 @@ abstract class _PlayerViewModelBase with Store {
   }
 
   @action
+  Future<void> deletePlayer(int playerID) async{
+    final isarDB = await PlayerRepository().openDB();
+
+    await isarDB.writeTxn(() async {
+      await isarDB.playerModels.delete(playerID);
+    });
+
+    await getPlayerList();
+  }
+
+  @action
   Future<List<PlayerModel>> getPlayerList() async{
     final isarDB = await PlayerRepository().openDB();
 
@@ -84,7 +75,6 @@ abstract class _PlayerViewModelBase with Store {
       await isarDB.playerModels.put(updatedPlayer);
     });
 
-    _svg = "";
     await getPlayerList();
   }
 

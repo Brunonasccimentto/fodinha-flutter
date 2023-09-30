@@ -16,12 +16,6 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
           Computed<List<PlayerModel>>(() => super.playerList,
               name: '_PlayerViewModelBase.playerList'))
       .value;
-  Computed<String>? _$svgComputed;
-
-  @override
-  String get svg => (_$svgComputed ??=
-          Computed<String>(() => super.svg, name: '_PlayerViewModelBase.svg'))
-      .value;
 
   late final _$_playerListAtom =
       Atom(name: '_PlayerViewModelBase._playerList', context: context);
@@ -39,28 +33,20 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     });
   }
 
-  late final _$_svgAtom =
-      Atom(name: '_PlayerViewModelBase._svg', context: context);
-
-  @override
-  String get _svg {
-    _$_svgAtom.reportRead();
-    return super._svg;
-  }
-
-  @override
-  set _svg(String value) {
-    _$_svgAtom.reportWrite(value, super._svg, () {
-      super._svg = value;
-    });
-  }
-
   late final _$createPlayerAsyncAction =
       AsyncAction('_PlayerViewModelBase.createPlayer', context: context);
 
   @override
   Future<void> createPlayer(PlayerModel player) {
     return _$createPlayerAsyncAction.run(() => super.createPlayer(player));
+  }
+
+  late final _$deletePlayerAsyncAction =
+      AsyncAction('_PlayerViewModelBase.deletePlayer', context: context);
+
+  @override
+  Future<void> deletePlayer(int playerID) {
+    return _$deletePlayerAsyncAction.run(() => super.deletePlayer(playerID));
   }
 
   late final _$getPlayerListAsyncAction =
@@ -88,36 +74,10 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     return _$setDealerAsyncAction.run(() => super.setDealer(playerID));
   }
 
-  late final _$_PlayerViewModelBaseActionController =
-      ActionController(name: '_PlayerViewModelBase', context: context);
-
-  @override
-  void setSvg(String svg) {
-    final _$actionInfo = _$_PlayerViewModelBaseActionController.startAction(
-        name: '_PlayerViewModelBase.setSvg');
-    try {
-      return super.setSvg(svg);
-    } finally {
-      _$_PlayerViewModelBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic createRandomNewAvatar() {
-    final _$actionInfo = _$_PlayerViewModelBaseActionController.startAction(
-        name: '_PlayerViewModelBase.createRandomNewAvatar');
-    try {
-      return super.createRandomNewAvatar();
-    } finally {
-      _$_PlayerViewModelBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
   @override
   String toString() {
     return '''
-playerList: ${playerList},
-svg: ${svg}
+playerList: ${playerList}
     ''';
   }
 }
