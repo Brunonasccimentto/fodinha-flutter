@@ -55,21 +55,27 @@ abstract class _PlayerViewModelBase with Store {
   @action
   Future<List<PlayerModel>> getPlayerList() async{
     final isarDB = await PlayerRepository().openDB();
+    final players = await isarDB.playerModels.filter().dealerEqualTo(true).findAll();
 
     await isarDB.writeTxn(() async {
-      _playerList = await isarDB.playerModels.where().findAll();
-      
+     
+      if(players.isEmpty){
+        _playerList[0].dealer = true;
+        isarDB.playerModels.put(_playerList[0]);
+      }
+
+       _playerList = await isarDB.playerModels.where().findAll();
     });
 
     return playerList;
   }
 
   @action
-  Future<void> updatePhoto(int playerID, String asset) async{
+  Future<void> updatePicture(int playerID, String asset) async{
     final isarDB = await PlayerRepository().openDB();
 
     var updatedPlayer = await isarDB.playerModels.get(playerID);
-    updatedPlayer!.photo = asset;
+    updatedPlayer!.picture = asset;
 
     await isarDB.writeTxn(() async {
       await isarDB.playerModels.put(updatedPlayer);

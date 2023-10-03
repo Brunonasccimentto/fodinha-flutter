@@ -14,7 +14,7 @@ abstract class _PlayerScreenControllerBase with Store {
   bool _large = false;
 
   @observable
-  String _svg = "";
+  String picture = "";
 
   @computed
   double get size => _size;
@@ -23,16 +23,16 @@ abstract class _PlayerScreenControllerBase with Store {
   bool get large => _large;
 
   @computed
-  String get svg => _svg;
+  String get svg => picture;
 
   @action
-  void setSvg(String svg) {
-    _svg = svg;
+  void setPicture(String svg) {
+    picture = svg;
   }
 
   @action
   createRandomNewAvatar(){
-    _svg = RandomAvatarString(
+    picture = RandomAvatarString(
     DateTime.now().toIso8601String(),
     trBackground: false,);
   }

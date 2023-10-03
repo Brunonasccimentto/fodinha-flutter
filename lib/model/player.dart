@@ -10,7 +10,7 @@ class PlayerModel {
   int count = 0;
   int points = 0;
   bool dealer = false;
-  String photo = "";
+  String picture = "";
 
   PlayerModel({required this.name});
 
@@ -21,7 +21,7 @@ class PlayerModel {
     data['count'] = this.count;
     data['points'] = this.points;
     data['dealer'] = this.dealer;
-    data['photo'] = this.photo;
+    data['photo'] = this.picture;
     return data;
   }
 }

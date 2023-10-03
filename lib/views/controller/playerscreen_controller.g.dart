@@ -60,19 +60,19 @@ mixin _$PlayerScreenController on _PlayerScreenControllerBase, Store {
     });
   }
 
-  late final _$_svgAtom =
-      Atom(name: '_PlayerScreenControllerBase._svg', context: context);
+  late final _$pictureAtom =
+      Atom(name: '_PlayerScreenControllerBase.picture', context: context);
 
   @override
-  String get _svg {
-    _$_svgAtom.reportRead();
-    return super._svg;
+  String get picture {
+    _$pictureAtom.reportRead();
+    return super.picture;
   }
 
   @override
-  set _svg(String value) {
-    _$_svgAtom.reportWrite(value, super._svg, () {
-      super._svg = value;
+  set picture(String value) {
+    _$pictureAtom.reportWrite(value, super.picture, () {
+      super.picture = value;
     });
   }
 
@@ -80,11 +80,11 @@ mixin _$PlayerScreenController on _PlayerScreenControllerBase, Store {
       ActionController(name: '_PlayerScreenControllerBase', context: context);
 
   @override
-  void setSvg(String svg) {
+  void setPicture(String svg) {
     final _$actionInfo = _$_PlayerScreenControllerBaseActionController
-        .startAction(name: '_PlayerScreenControllerBase.setSvg');
+        .startAction(name: '_PlayerScreenControllerBase.setPicture');
     try {
-      return super.setSvg(svg);
+      return super.setPicture(svg);
     } finally {
       _$_PlayerScreenControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -115,6 +115,7 @@ mixin _$PlayerScreenController on _PlayerScreenControllerBase, Store {
   @override
   String toString() {
     return '''
+picture: ${picture},
 size: ${size},
 large: ${large},
 svg: ${svg}

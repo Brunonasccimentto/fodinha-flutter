@@ -57,13 +57,13 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     return _$getPlayerListAsyncAction.run(() => super.getPlayerList());
   }
 
-  late final _$updatePhotoAsyncAction =
-      AsyncAction('_PlayerViewModelBase.updatePhoto', context: context);
+  late final _$updatePictureAsyncAction =
+      AsyncAction('_PlayerViewModelBase.updatePicture', context: context);
 
   @override
-  Future<void> updatePhoto(int playerID, String asset) {
-    return _$updatePhotoAsyncAction
-        .run(() => super.updatePhoto(playerID, asset));
+  Future<void> updatePicture(int playerID, String asset) {
+    return _$updatePictureAsyncAction
+        .run(() => super.updatePicture(playerID, asset));
   }
 
   late final _$setDealerAsyncAction =

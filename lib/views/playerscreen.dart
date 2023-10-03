@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
-import 'package:fodinha_flutter/components/custom_field.dart';
-import 'package:fodinha_flutter/components/main_list.dart';
+import 'package:fodinha_flutter/components/atoms/custom_field.dart';
+import 'package:fodinha_flutter/components/templates/main_list.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
 import 'package:fodinha_flutter/model/player.dart';
 import 'package:provider/provider.dart';
@@ -56,34 +56,35 @@ class _PlayerScreenState extends State<PlayerScreen> {
               onPressed: () {
                 inputController.text = "";
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                          content: CustomField(
-                              labelText: "Nome",
-                              controller: inputController,
-                              onChanged: () {},
-                              validator: (String? value) {
-                                if (value == null || value == "") {
-                                  return "Campo não preenchido";
-                                }
-                                return null;
-                              }),
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  inputController.text = "";
-                                },
-                                child: const Text("Cancelar")),
-                            TextButton(
-                                onPressed: () {
-                                  Provider.of<PlayerViewModel>(context, listen: false).createPlayer(PlayerModel(name: inputController.text));
-                                  inputController.text = "";
-                                  Navigator.pop(context, 3);
-                                },
-                                child: const Text("Criar"))
-                          ],
-                        ));
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                        content: CustomField(
+                            labelText: "Nome",
+                            controller: inputController,
+                            onChanged: () {},
+                            validator: (String? value) {
+                              if (value == null || value == "") {
+                                return "Campo não preenchido";
+                              }
+                              return null;
+                            }),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                inputController.text = "";
+                              },
+                              child: const Text("Cancelar")),
+                          TextButton(
+                              onPressed: () {
+                                Provider.of<PlayerViewModel>(context, listen: false).createPlayer(PlayerModel(name: inputController.text));
+                                inputController.text = "";
+                                Navigator.pop(context, 3);
+                              },
+                              child: const Text("Criar"))
+                        ],
+                      )
+                  );
               },
               child: const Icon(
                 Icons.person_add,
@@ -92,7 +93,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
               ),
             ),
             FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {               
+                players.then((value) => value.length >= 2 ? Navigator.pop(context) : "alerta");
+              },
               tooltip: "Começar",
               child: const Icon(Icons.videogame_asset_rounded,
                 size: 24,

@@ -37,9 +37,9 @@ const PlayerModelSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'photo': PropertySchema(
+    r'picture': PropertySchema(
       id: 4,
-      name: r'photo',
+      name: r'picture',
       type: IsarType.string,
     ),
     r'points': PropertySchema(
@@ -69,7 +69,7 @@ int _playerModelEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.name.length * 3;
-  bytesCount += 3 + object.photo.length * 3;
+  bytesCount += 3 + object.picture.length * 3;
   return bytesCount;
 }
 
@@ -83,7 +83,7 @@ void _playerModelSerialize(
   writer.writeLong(offsets[1], object.count);
   writer.writeBool(offsets[2], object.dealer);
   writer.writeString(offsets[3], object.name);
-  writer.writeString(offsets[4], object.photo);
+  writer.writeString(offsets[4], object.picture);
   writer.writeLong(offsets[5], object.points);
 }
 
@@ -99,7 +99,7 @@ PlayerModel _playerModelDeserialize(
   object.color = reader.readLong(offsets[0]);
   object.count = reader.readLong(offsets[1]);
   object.dealer = reader.readBool(offsets[2]);
-  object.photo = reader.readString(offsets[4]);
+  object.picture = reader.readString(offsets[4]);
   object.playerID = id;
   object.points = reader.readLong(offsets[5]);
   return object;
@@ -474,13 +474,13 @@ extension PlayerModelQueryFilter
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoEqualTo(
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> pictureEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'photo',
+        property: r'picture',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -488,7 +488,7 @@ extension PlayerModelQueryFilter
   }
 
   QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
-      photoGreaterThan(
+      pictureGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -496,14 +496,14 @@ extension PlayerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'photo',
+        property: r'picture',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoLessThan(
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> pictureLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -511,14 +511,14 @@ extension PlayerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'photo',
+        property: r'picture',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoBetween(
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> pictureBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -527,7 +527,7 @@ extension PlayerModelQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'photo',
+        property: r'picture',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -537,70 +537,72 @@ extension PlayerModelQueryFilter
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoStartsWith(
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      pictureStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'photo',
+        property: r'picture',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoEndsWith(
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> pictureEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'photo',
+        property: r'picture',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoContains(
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> pictureContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'photo',
+        property: r'picture',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoMatches(
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> pictureMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'photo',
+        property: r'picture',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition> photoIsEmpty() {
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      pictureIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'photo',
+        property: r'picture',
         value: '',
       ));
     });
   }
 
   QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
-      photoIsNotEmpty() {
+      pictureIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'photo',
+        property: r'picture',
         value: '',
       ));
     });
@@ -772,15 +774,15 @@ extension PlayerModelQuerySortBy
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterSortBy> sortByPhoto() {
+  QueryBuilder<PlayerModel, PlayerModel, QAfterSortBy> sortByPicture() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photo', Sort.asc);
+      return query.addSortBy(r'picture', Sort.asc);
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterSortBy> sortByPhotoDesc() {
+  QueryBuilder<PlayerModel, PlayerModel, QAfterSortBy> sortByPictureDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photo', Sort.desc);
+      return query.addSortBy(r'picture', Sort.desc);
     });
   }
 
@@ -847,15 +849,15 @@ extension PlayerModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterSortBy> thenByPhoto() {
+  QueryBuilder<PlayerModel, PlayerModel, QAfterSortBy> thenByPicture() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photo', Sort.asc);
+      return query.addSortBy(r'picture', Sort.asc);
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QAfterSortBy> thenByPhotoDesc() {
+  QueryBuilder<PlayerModel, PlayerModel, QAfterSortBy> thenByPictureDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photo', Sort.desc);
+      return query.addSortBy(r'picture', Sort.desc);
     });
   }
 
@@ -911,10 +913,10 @@ extension PlayerModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<PlayerModel, PlayerModel, QDistinct> distinctByPhoto(
+  QueryBuilder<PlayerModel, PlayerModel, QDistinct> distinctByPicture(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'photo', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'picture', caseSensitive: caseSensitive);
     });
   }
 
@@ -957,9 +959,9 @@ extension PlayerModelQueryProperty
     });
   }
 
-  QueryBuilder<PlayerModel, String, QQueryOperations> photoProperty() {
+  QueryBuilder<PlayerModel, String, QQueryOperations> pictureProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'photo');
+      return query.addPropertyName(r'picture');
     });
   }
 
