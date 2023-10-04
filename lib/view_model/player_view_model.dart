@@ -1,7 +1,7 @@
 
 import 'package:fodinha_flutter/model/player.dart';
 import 'dart:math';
-import 'package:fodinha_flutter/constants/colors.dart';
+import 'package:fodinha_flutter/shared/constants/colors.dart';
 import 'package:fodinha_flutter/model/player_repository.dart';
 import 'package:isar/isar.dart';
 import 'package:mobx/mobx.dart';

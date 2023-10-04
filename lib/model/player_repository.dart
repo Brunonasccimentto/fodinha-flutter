@@ -5,10 +5,8 @@ import 'package:fodinha_flutter/model/services/database.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-class PlayerRepository {
-  // ignore: unused_field
-  final DatabaseService _playerDatabase = DatabaseService();
-
+class PlayerRepository implements DatabaseService {
+  
   Future<Isar> openDB() async {
     final dir = await getApplicationDocumentsDirectory();
 

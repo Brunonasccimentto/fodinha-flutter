@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
-import 'package:fodinha_flutter/views/controller/playerscreen_controller.dart';
-import 'package:fodinha_flutter/views/playerscreen.dart';
-import 'package:fodinha_flutter/views/startscreen.dart';
+import 'package:fodinha_flutter/views/playerscreen/playerscreen.dart';
+import 'package:fodinha_flutter/views/startscreen/startscreen.dart';
 import 'package:provider/provider.dart';
 
 
@@ -20,8 +19,7 @@ class AppWidget extends StatelessWidget {
       providers: [
         Provider<PlayerViewModel>.value(
           value: PlayerViewModel()),
-        Provider<PlayerScreenController>.value(
-          value: PlayerScreenController())
+        
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

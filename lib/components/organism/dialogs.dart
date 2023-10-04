@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fodinha_flutter/components/atoms/avatar_player_circle.dart';
 import 'package:fodinha_flutter/components/atoms/circle_color.dart';
 import 'package:fodinha_flutter/model/player.dart';
-import 'package:fodinha_flutter/views/controller/playerscreen_controller.dart';
+import 'package:fodinha_flutter/views/playerscreen/controller/playerscreen_controller.dart';
 
 class Dialogs extends StatelessWidget {
   final PlayerModel data;
@@ -24,6 +25,7 @@ class Dialogs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) { 
+
     return Dialog(
         insetAnimationDuration: const Duration(milliseconds: 400),
         insetAnimationCurve: Curves.bounceIn,
@@ -37,7 +39,7 @@ class Dialogs extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Column(
                       children: [
-                        
+                        // tem como melhorar o avatar_player
                         Container(
                           child: controller.picture.contains(".svg")
                               ? SvgPicture.asset(
@@ -55,6 +57,7 @@ class Dialogs extends StatelessWidget {
                                 data: data,
                                 width: 150,
                                 height: 150,
+                                labelSize: 32,
                                 radius: 90,))
                       ],
                     ),
@@ -90,7 +93,12 @@ class Dialogs extends StatelessWidget {
                                 }
 
                                 if (avatar == "assets/camera-fotografica.svg") {
-                                  //todo
+                                  controller.takePhoto();
+                                  return;
+                                }
+
+                                if(avatar == "assets/galeria.svg"){
+                                  controller.getImageFromGallery();
                                   return;
                                 }
 

@@ -27,6 +27,13 @@ mixin _$PlayerScreenController on _PlayerScreenControllerBase, Store {
   String get svg => (_$svgComputed ??= Computed<String>(() => super.svg,
           name: '_PlayerScreenControllerBase.svg'))
       .value;
+  Computed<XFile?>? _$selectedImageComputed;
+
+  @override
+  XFile? get selectedImage =>
+      (_$selectedImageComputed ??= Computed<XFile?>(() => super.selectedImage,
+              name: '_PlayerScreenControllerBase.selectedImage'))
+          .value;
 
   late final _$_sizeAtom =
       Atom(name: '_PlayerScreenControllerBase._size', context: context);
@@ -76,6 +83,30 @@ mixin _$PlayerScreenController on _PlayerScreenControllerBase, Store {
     });
   }
 
+  late final _$_selectedImageAtom = Atom(
+      name: '_PlayerScreenControllerBase._selectedImage', context: context);
+
+  @override
+  XFile? get _selectedImage {
+    _$_selectedImageAtom.reportRead();
+    return super._selectedImage;
+  }
+
+  @override
+  set _selectedImage(XFile? value) {
+    _$_selectedImageAtom.reportWrite(value, super._selectedImage, () {
+      super._selectedImage = value;
+    });
+  }
+
+  late final _$takePhotoAsyncAction =
+      AsyncAction('_PlayerScreenControllerBase.takePhoto', context: context);
+
+  @override
+  Future<void> takePhoto() {
+    return _$takePhotoAsyncAction.run(() => super.takePhoto());
+  }
+
   late final _$_PlayerScreenControllerBaseActionController =
       ActionController(name: '_PlayerScreenControllerBase', context: context);
 
@@ -118,7 +149,8 @@ mixin _$PlayerScreenController on _PlayerScreenControllerBase, Store {
 picture: ${picture},
 size: ${size},
 large: ${large},
-svg: ${svg}
+svg: ${svg},
+selectedImage: ${selectedImage}
     ''';
   }
 }

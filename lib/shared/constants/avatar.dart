@@ -12,4 +12,5 @@ const avatar = ["assets/Multiavatar-0e6d928541840d802f.svg",
   "assets/Multiavatar-c1168925e7d2cf838a.svg",
   "assets/Multiavatar-dc0ae43678432dc440.svg",
   "assets/random-avatar.svg",
-  "assets/camera-fotografica.svg"];
+  "assets/camera-fotografica.svg",
+  "assets/galeria.svg"];

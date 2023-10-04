@@ -10,18 +10,21 @@ class AvatarPlayerCircle extends StatelessWidget {
   final double? height;
   final double? opacity;
   final double? radius;
+  final EdgeInsets? margin;
   final VoidCallback? onLongPress;
   final VoidCallback? onTap; 
 
   const AvatarPlayerCircle(
-      {required this.data, this.height, this.width, this.opacity, this.onLongPress, this.onTap, this.radius, Key? key, this.secondData})
+      {required this.data, this.height, this.width, this.opacity, this.onLongPress, this.onTap, this.radius, this.margin, Key? key, this.secondData})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+  
     return Opacity(
       opacity: opacity ?? 1,
       child: Container(
+        margin: margin,
         alignment: Alignment.center,
         child: Column(
           children: [

@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:random_avatar/random_avatar.dart';
 
@@ -41,6 +42,30 @@ abstract class _PlayerScreenControllerBase with Store {
   void updateSize(){ 
      _large = !large;
     _size = large ? 60 : 0;
+   
   }
 
+  ImagePicker imagePicker = ImagePicker();
+
+  @observable
+  XFile? _selectedImage;
+
+  @computed
+  XFile? get selectedImage => _selectedImage;
+
+  @action
+  Future<void> takePhoto() async {
+    final XFile? selectedTemporaryImage = await imagePicker.pickImage(source: ImageSource.camera);
+    if(selectedTemporaryImage != null){
+      _selectedImage = XFile(selectedTemporaryImage.path);
+    }
+  }
+
+  @action
+  Future<void> getImageFromGallery() async {
+    final XFile? selectedTemporaryImage = await imagePicker.pickImage(source: ImageSource.gallery);
+    if(selectedTemporaryImage != null){
+      _selectedImage = XFile(selectedTemporaryImage.path);
+    }
+  }
 }

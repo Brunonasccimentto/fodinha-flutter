@@ -48,6 +48,8 @@ dependencies:
   provider: ^6.0.5
   mockito: ^5.4.2
   flutter_shake_animated: ^0.0.5
+  image_picker: ^1.0.4
+  image_picker_platform_interface: ^2.9.1
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +96,7 @@ flutter:
    - assets/Multiavatar-dc0ae43678432dc440.svg
    - assets/random-avatar.svg
    - assets/camera-fotografica.svg
+   - assets/galeria.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
