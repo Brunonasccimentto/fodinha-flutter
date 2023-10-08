@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
+import 'package:fodinha_flutter/views/gamescreen/gamescreen.dart';
 import 'package:fodinha_flutter/views/playerscreen/playerscreen.dart';
 import 'package:fodinha_flutter/views/startscreen/startscreen.dart';
 import 'package:provider/provider.dart';
@@ -25,12 +26,14 @@ class AppWidget extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.indigo),
+              iconTheme: const IconThemeData(color: Colors.white70),
               textTheme:
                   const TextTheme(displayLarge: TextStyle(color: Colors.white))),
           initialRoute: "/",
           routes: {
             "/": (BuildContext context) => const StartScreen(),
             "/PlayerScreen":(BuildContext context) => const PlayerScreen(),
+            "/GameScreen": (BuildContext context) => const GameScreen(),
           }),
     );
   }
