@@ -101,4 +101,17 @@ abstract class _PlayerViewModelBase with Store {
     await getPlayerList();
   }
 
+  @action
+  Future<void> countHowManyRoundsPlayerDo(int payload, int playerID) async{
+    final isarDB = await PlayerRepository().openDB();
+
+    var updatePlayerCount = await isarDB.playerModels.get(playerID);
+    updatePlayerCount!.count = payload;
+
+    await isarDB.writeTxn(() async {
+      await isarDB.playerModels.put(updatePlayerCount);
+    });
+
+    await getPlayerList();
+  }
 }

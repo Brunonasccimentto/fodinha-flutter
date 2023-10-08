@@ -107,6 +107,16 @@ mixin _$PlayerScreenController on _PlayerScreenControllerBase, Store {
     return _$takePhotoAsyncAction.run(() => super.takePhoto());
   }
 
+  late final _$getImageFromGalleryAsyncAction = AsyncAction(
+      '_PlayerScreenControllerBase.getImageFromGallery',
+      context: context);
+
+  @override
+  Future<void> getImageFromGallery() {
+    return _$getImageFromGalleryAsyncAction
+        .run(() => super.getImageFromGallery());
+  }
+
   late final _$_PlayerScreenControllerBaseActionController =
       ActionController(name: '_PlayerScreenControllerBase', context: context);
 
