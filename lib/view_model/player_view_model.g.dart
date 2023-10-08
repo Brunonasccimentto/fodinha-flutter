@@ -74,6 +74,16 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     return _$setDealerAsyncAction.run(() => super.setDealer(playerID));
   }
 
+  late final _$countHowManyRoundsPlayerDoAsyncAction = AsyncAction(
+      '_PlayerViewModelBase.countHowManyRoundsPlayerDo',
+      context: context);
+
+  @override
+  Future<void> countHowManyRoundsPlayerDo(int payload, int playerID) {
+    return _$countHowManyRoundsPlayerDoAsyncAction
+        .run(() => super.countHowManyRoundsPlayerDo(payload, playerID));
+  }
+
   @override
   String toString() {
     return '''

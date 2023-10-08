@@ -72,7 +72,7 @@ class MainList extends StatelessWidget {
                                 onSave: ()=> store.updatePicture(store.playerList[index].playerID, controller.svg));
                               },
                           );
-                        },)
+                        }, showCounter: false,)
                     );
                   },
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -94,7 +94,8 @@ class MainList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,               
                 children: [
                   ElevatedTextButtonDefault(                
-                    text: "Adicionar jogador",
+                    text: "Adicionar jogador", 
+                    icon: const Icon(Icons.add),                  
                     onPressed: (){
                       // inputController.text = "";
                       showDialog(
@@ -136,8 +137,9 @@ class MainList extends StatelessWidget {
                     }),
                   ElevatedTextButtonDefault(                  
                     text: "Começar jogo",
+                    icon: const Icon(Icons.sports_esports_outlined),
                     onPressed: (){
-                          
+                          Navigator.pushReplacementNamed(context, "/GameScreen");
                     })
                 ],
                 ) :  DragTarget<int>(
