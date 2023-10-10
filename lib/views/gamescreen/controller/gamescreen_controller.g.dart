@@ -9,6 +9,14 @@ part of 'gamescreen_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$GameScreenController on _GameScreenControllerBase, Store {
+  Computed<List<int>>? _$playersLostRoundComputed;
+
+  @override
+  List<int> get playersLostRound => (_$playersLostRoundComputed ??=
+          Computed<List<int>>(() => super.playersLostRound,
+              name: '_GameScreenControllerBase.playersLostRound'))
+      .value;
+
   late final _$cardsCounterAtom =
       Atom(name: '_GameScreenControllerBase.cardsCounter', context: context);
 
@@ -57,6 +65,22 @@ mixin _$GameScreenController on _GameScreenControllerBase, Store {
     });
   }
 
+  late final _$_playersLostRoundAtom = Atom(
+      name: '_GameScreenControllerBase._playersLostRound', context: context);
+
+  @override
+  List<int> get _playersLostRound {
+    _$_playersLostRoundAtom.reportRead();
+    return super._playersLostRound;
+  }
+
+  @override
+  set _playersLostRound(List<int> value) {
+    _$_playersLostRoundAtom.reportWrite(value, super._playersLostRound, () {
+      super._playersLostRound = value;
+    });
+  }
+
   late final _$_GameScreenControllerBaseActionController =
       ActionController(name: '_GameScreenControllerBase', context: context);
 
@@ -83,22 +107,12 @@ mixin _$GameScreenController on _GameScreenControllerBase, Store {
   }
 
   @override
-  List<PlayerModel> roundDealer(List<PlayerModel> players) {
-    final _$actionInfo = _$_GameScreenControllerBaseActionController
-        .startAction(name: '_GameScreenControllerBase.roundDealer');
-    try {
-      return super.roundDealer(players);
-    } finally {
-      _$_GameScreenControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 cardsCounter: ${cardsCounter},
 round: ${round},
-cards: ${cards}
+cards: ${cards},
+playersLostRound: ${playersLostRound}
     ''';
   }
 }

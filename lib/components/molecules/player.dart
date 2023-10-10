@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fodinha_flutter/components/atoms/avatar_player_circle.dart';
 import 'package:fodinha_flutter/model/player.dart';
 
 // ignore: must_be_immutable
@@ -8,8 +7,10 @@ class Player extends StatelessWidget {
   final VoidCallback? onLongPress;
   final VoidCallback? onTap;
   bool showCounter = false;
+  final Color? onSelectedColor;
+  final Widget child;
 
-  Player({required this.data, this.onLongPress, this.onTap, required this.showCounter, Key? key} ) : super(key: key);
+  Player({required this.data, this.onLongPress, this.onTap, required this.showCounter, this.onSelectedColor, required this.child, Key? key} ) : super(key: key);
 
   convertPointsToRespectiveIcon<Widget> (int? points){
     switch (points) {   
@@ -46,15 +47,14 @@ class Player extends StatelessWidget {
               GestureDetector(
                 onLongPress: onLongPress,
                 onTap: onTap,
-                child: AvatarPlayerCircle(data: data)
+                child: child,
                 ),
-    
+            
               Text(data.name,
                 style: const TextStyle(
                   color: Colors.white70
                 ),),
-    
-             
+                        
             ],
           ),
         ),

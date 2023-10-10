@@ -1,16 +1,15 @@
-
-
-
 import 'package:fodinha_flutter/model/player.dart';
 import 'package:fodinha_flutter/views/gamescreen/entities/cards.dart';
 import 'package:mobx/mobx.dart';
 import 'package:fodinha_flutter/shared/enums/count.dart';
+
 part "gamescreen_controller.g.dart";
 
 class GameScreenController = _GameScreenControllerBase with _$GameScreenController;
 
 
-abstract class _GameScreenControllerBase with Store  {
+abstract class _GameScreenControllerBase with Store {
+
   @observable
   int cardsCounter = 1;
 
@@ -20,6 +19,16 @@ abstract class _GameScreenControllerBase with Store  {
   @observable
   Cards cards = Cards();
 
+  @observable
+  List<int> _playersLostRound = [];
+
+  @computed
+  List<int> get playersLostRound => _playersLostRound;
+
+  set playersLostRound(value){
+    _playersLostRound = [..._playersLostRound, value];
+    print(_playersLostRound);
+  }
 
   @action
   int sumAllPlayerCountValues(List<PlayerModel> players) {
@@ -27,8 +36,8 @@ abstract class _GameScreenControllerBase with Store  {
       counter += obj.count;
       return counter;
     });
-    return sum;
 
+    return sum;
   }
 
   @action
@@ -45,28 +54,21 @@ abstract class _GameScreenControllerBase with Store  {
 
   }
 
-  @action
-  List<PlayerModel> roundDealer(List<PlayerModel> players){
-    var dealer = players.where((item) => item.points < 5).toList();
-    var dealerFiltedArray = dealer.map((item) => item.dealer).toList();
-    var lastDealerIndex = dealerFiltedArray.indexWhere((element) => element == true );
+  String gameWinner(List<PlayerModel> players) {
+  List<int> playerPoints = players.map((item) => item.points).toList();
+  int howManyHaveFive = 0;
 
-    for (var item in players) {
-      item.dealer = false;
-    }
-
-    if (lastDealerIndex + 1 < dealer.length) {
-        var newDealerIndex = players.indexWhere((element) => dealer[lastDealerIndex + 1].playerID == element.playerID);       
-        players[newDealerIndex].dealer = true;
-
-    } else {
-        dealer[0].dealer = true;
-        var newDealerIndex = players.indexWhere((element) => element.playerID == dealer[0].playerID);
-        players[newDealerIndex].dealer = true;
-
-    }
-
-    return players;
+  for (int i = 0; i < playerPoints.length; i++) {
+    if (playerPoints[i] == 5) howManyHaveFive++;
   }
+
+  if (players.length - 1 == howManyHaveFive) {
+    int winnerIndex = playerPoints.indexWhere((element) => element != 5);
+    String winnerName = players[winnerIndex].name;
+    return ('Parabéns $winnerName você ganhou o jogo');
+  }
+
+  return "";
+  }  
 
 }

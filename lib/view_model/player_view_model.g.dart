@@ -84,6 +84,24 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
         .run(() => super.countHowManyRoundsPlayerDo(payload, playerID));
   }
 
+  late final _$roundDealerAsyncAction =
+      AsyncAction('_PlayerViewModelBase.roundDealer', context: context);
+
+  @override
+  Future<void> roundDealer() {
+    return _$roundDealerAsyncAction.run(() => super.roundDealer());
+  }
+
+  late final _$updatePlayersLostRoundAsyncAction = AsyncAction(
+      '_PlayerViewModelBase.updatePlayersLostRound',
+      context: context);
+
+  @override
+  Future<void> updatePlayersLostRound(List<int> players) {
+    return _$updatePlayersLostRoundAsyncAction
+        .run(() => super.updatePlayersLostRound(players));
+  }
+
   @override
   String toString() {
     return '''

@@ -72,7 +72,8 @@ class MainList extends StatelessWidget {
                                 onSave: ()=> store.updatePicture(store.playerList[index].playerID, controller.svg));
                               },
                           );
-                        }, showCounter: false,)
+                        }, showCounter: false,
+                        child: AvatarPlayerCircle(data: store.playerList[index]))
                     );
                   },
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

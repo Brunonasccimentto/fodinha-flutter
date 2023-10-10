@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
+import 'package:fodinha_flutter/views/gamescreen/controller/gamescreen_controller.dart';
 import 'package:fodinha_flutter/views/gamescreen/gamescreen.dart';
+import 'package:fodinha_flutter/views/gamescreen/gamescreen_endRound.dart';
 import 'package:fodinha_flutter/views/playerscreen/playerscreen.dart';
 import 'package:fodinha_flutter/views/startscreen/startscreen.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +22,8 @@ class AppWidget extends StatelessWidget {
       providers: [
         Provider<PlayerViewModel>.value(
           value: PlayerViewModel()),
+        Provider<GameScreenController>.value(
+        value: GameScreenController()),
         
       ],
       child: MaterialApp(
@@ -34,6 +38,7 @@ class AppWidget extends StatelessWidget {
             "/": (BuildContext context) => const StartScreen(),
             "/PlayerScreen":(BuildContext context) => const PlayerScreen(),
             "/GameScreen": (BuildContext context) => const GameScreen(),
+            "/GameScreenEndRound": (BuildContext context) => const GameScreenEndRound(),
           }),
     );
   }

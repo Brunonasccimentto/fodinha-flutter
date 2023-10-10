@@ -13,9 +13,10 @@ class AvatarPlayerCircle extends StatelessWidget {
   final EdgeInsets? margin;
   final VoidCallback? onLongPress;
   final VoidCallback? onTap; 
+  final ColorFilter? filter;
 
   const AvatarPlayerCircle(
-      {required this.data, this.height, this.width, this.opacity, this.onLongPress, this.onTap, this.radius, this.margin, Key? key, this.secondData})
+      {required this.data, this.height, this.width, this.opacity, this.onLongPress, this.onTap, this.radius, this.margin, this.filter, Key? key, this.secondData})
       : super(key: key);
 
   @override
@@ -26,28 +27,31 @@ class AvatarPlayerCircle extends StatelessWidget {
       child: Container(
         margin: margin,
         alignment: Alignment.center,
-        child: Column(
-          children: [
-            
-            Container(
-              child: data.picture.contains(".svg")
-                  ? SvgPicture.asset(
-                      data.picture,
-                      width: width ?? 80,
-                      height: height ?? 80,
-                    )
-                  : data.picture.contains("<")
-                  ? SvgPicture.string(
-                      data.picture,
-                      width: width ?? 80,
-                      height: height ?? 80,
-                    )
-                  : CircleColor(
-                    data: data.runtimeType == PlayerModel ? data : secondData,
-                    width: width,
-                    height: height,
-                    radius: 90,))
-          ],
+        child: ColorFiltered(
+          colorFilter: filter ?? const ColorFilter.mode(Colors.transparent, BlendMode.color),
+          child: Container(
+            child: data.picture.contains(".svg")
+                ? SvgPicture.asset(
+                    data.picture,
+                    width: width ?? 80,
+                    height: height ?? 80,
+                  )
+                : data.picture.contains("<")
+                ? SvgPicture.string(
+                    data.picture,
+                    width: width ?? 80,
+                    height: height ?? 80,
+                  )
+                : data.picture.contains("") ? 
+                
+                  CircleColor(
+                  data: data.runtimeType == PlayerModel ? data : secondData,
+                  width: width,
+                  height: height,
+                  radius: 90,) : CircleAvatar(
+                    
+                  )
+          ),
         ),
       ),
     );

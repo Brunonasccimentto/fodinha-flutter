@@ -50,6 +50,7 @@ dependencies:
   flutter_shake_animated: ^0.0.5
   image_picker: ^1.0.4
   image_picker_platform_interface: ^2.9.1
+  motion_toast: ^2.7.9
 
 dev_dependencies:
   flutter_test:
@@ -97,6 +98,8 @@ flutter:
    - assets/random-avatar.svg
    - assets/camera-fotografica.svg
    - assets/galeria.svg
+   - assets/selo-eliminado.svg
+   - assets/carimbo-eliminado.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

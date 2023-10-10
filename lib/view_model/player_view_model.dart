@@ -25,6 +25,7 @@ abstract class _PlayerViewModelBase with Store {
     return randomColor;
   }
 
+  //PlayerScreen actions
   @action
   Future<void> createPlayer(PlayerModel player) async{
 
@@ -67,7 +68,7 @@ abstract class _PlayerViewModelBase with Store {
        _playerList = await isarDB.playerModels.where().findAll();
     });
 
-    return playerList;
+    return _playerList;
   }
 
   @action
@@ -84,6 +85,7 @@ abstract class _PlayerViewModelBase with Store {
     await getPlayerList();
   }
 
+  //GameScreen actions
   @action
   Future<void> setDealer(int playerID) async{
     final isarDB = await PlayerRepository().openDB();
@@ -112,6 +114,55 @@ abstract class _PlayerViewModelBase with Store {
       await isarDB.playerModels.put(updatePlayerCount);
     });
 
+    await getPlayerList();
+  }
+
+  @action
+  Future<void> roundDealer() async {
+    final isarDB = await PlayerRepository().openDB();
+    var dealer = _playerList.where((item) => item.points < 5).toList();
+    var dealerFiltedArray = dealer.map((item) => item.dealer).toList();
+    var lastDealerIndex = dealerFiltedArray.indexWhere((element) => element == true );
+
+    for (var item in _playerList) {
+      item.dealer = false;
+    }
+
+    if (lastDealerIndex + 1 < dealer.length) {
+        var newDealerIndex = _playerList.indexWhere((element) => dealer[lastDealerIndex + 1].playerID == element.playerID);       
+        _playerList[newDealerIndex].dealer = true;
+
+    } else {
+        dealer[0].dealer = true;
+        var newDealerIndex = _playerList.indexWhere((element) => element.playerID == dealer[0].playerID);
+        _playerList[newDealerIndex].dealer = true;
+
+    }
+
+     await isarDB.writeTxn(() async {
+      await isarDB.playerModels.putAll(_playerList);
+    });
+
+    await getPlayerList();
+  }
+
+  //GameScreenEndActions
+  @action
+  Future<void> updatePlayersLostRound(List<int> players) async{
+    final isarDB = await PlayerRepository().openDB();
+
+    print(players);
+
+    var playersToUpdate = await isarDB.playerModels.getAll(players);
+
+    for (var item in playersToUpdate) {
+      item!.points = item.points + 1;
+
+      await isarDB.writeTxn(() async {
+        await isarDB.playerModels.put(item);
+    });
+    }
+    
     await getPlayerList();
   }
 }
