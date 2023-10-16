@@ -81,6 +81,22 @@ mixin _$GameScreenController on _GameScreenControllerBase, Store {
     });
   }
 
+  late final _$winnerAtom =
+      Atom(name: '_GameScreenControllerBase.winner', context: context);
+
+  @override
+  String get winner {
+    _$winnerAtom.reportRead();
+    return super.winner;
+  }
+
+  @override
+  set winner(String value) {
+    _$winnerAtom.reportWrite(value, super.winner, () {
+      super.winner = value;
+    });
+  }
+
   late final _$_GameScreenControllerBaseActionController =
       ActionController(name: '_GameScreenControllerBase', context: context);
 
@@ -112,6 +128,7 @@ mixin _$GameScreenController on _GameScreenControllerBase, Store {
 cardsCounter: ${cardsCounter},
 round: ${round},
 cards: ${cards},
+winner: ${winner},
 playersLostRound: ${playersLostRound}
     ''';
   }

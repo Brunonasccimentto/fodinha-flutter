@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,7 +5,10 @@ import 'package:fodinha_flutter/components/atoms/avatar_player_circle.dart';
 import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/components/molecules/player.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
+import 'package:fodinha_flutter/views/gamescreen/components/winner_dialog.dart';
 import 'package:fodinha_flutter/views/gamescreen/controller/gamescreen_controller.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 import 'package:provider/provider.dart';
 
 class GameScreenEndRound extends StatefulWidget {
@@ -22,6 +23,24 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
   Widget build(BuildContext context) {
     final store = Provider.of<PlayerViewModel>(context);
     final controller = Provider.of<GameScreenController>(context);
+
+    void openDialog() {
+      showDialog(
+        context: context, 
+        builder: (BuildContext context) {
+          return WinnerWidget(
+            winner: controller.winner, 
+            onContinuePressed: () { 
+              store.resetStats();
+              Navigator.pushReplacementNamed(context, '/GameScreen');
+             }, 
+            onNewGamePressed: () { 
+              store.newGame();
+              Navigator.pushReplacementNamed(context, '/GameScreen');
+             },
+            );
+        });
+    }
     
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 125, 139, 218),
@@ -77,17 +96,18 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
                                 },
                               ),
 
-                              Container(                                                       
+                              Positioned.fill(                                                        
+                                child: Align(
                                   alignment: Alignment.center,
-                                  padding: EdgeInsets.only(bottom: store.playerList.length - 1 == index ? 70 : 0),
                                   child: store.playerList[index].points == 5 ? 
                                   SvgPicture.asset("assets/selo-eliminado.svg",
                                   // ignore: deprecated_member_use
                                   color: Colors.red,
                                   width: 100,
-                                  height: 100) 
+                                  height: 150) 
                                   : Container(),
                                 ),
+                              ),
                             ],
                           );
                         });
@@ -98,12 +118,27 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
                       child: Align(
                         alignment: Alignment.bottomCenter,
                         child: ElevatedTextButtonDefault(
-                          onPressed: () {    
-                            controller.howManyCards();
-                            store.roundDealer();                                                                           
-                            store.updatePlayersLostRound(controller.playersLostRound);
-                            
-                            Navigator.pushReplacementNamed(context, "/GameScreen");
+                          onPressed: () async { 
+                            if(controller.playersLostRound.isEmpty){
+                              MotionToast.error(
+                                title:  const Text("Erro"),
+                                height: 80,
+                                description:  const Text("Selecione o jogador que perdeu a rodada"),
+                                position: MotionToastPosition.top,
+                              ).show(context);
+                              return;
+                            }
+
+                            await store.updatePlayersLostRound(controller.playersLostRound);
+                            controller.gameWinner(store.playerList);  
+
+                            if(controller.winner.isNotEmpty) {
+                              openDialog();
+                            } else {
+                                await store.roundDealer();                                                                                                         
+                                controller.howManyCards();                                                  
+                                Navigator.pushReplacementNamed(context, "/GameScreen");
+                            }
                           }, 
                           text: "Finalizar rodada"),
                       ),

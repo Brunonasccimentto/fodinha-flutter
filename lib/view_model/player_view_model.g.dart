@@ -33,6 +33,14 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     });
   }
 
+  late final _$newGameAsyncAction =
+      AsyncAction('_PlayerViewModelBase.newGame', context: context);
+
+  @override
+  Future<void> newGame() {
+    return _$newGameAsyncAction.run(() => super.newGame());
+  }
+
   late final _$createPlayerAsyncAction =
       AsyncAction('_PlayerViewModelBase.createPlayer', context: context);
 

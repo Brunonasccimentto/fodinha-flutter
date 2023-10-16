@@ -1,8 +1,8 @@
 
-import 'package:fodinha_flutter/model/player.dart';
+import 'package:fodinha_flutter/model/player/player.dart';
 import 'dart:math';
 import 'package:fodinha_flutter/shared/constants/colors.dart';
-import 'package:fodinha_flutter/model/player_repository.dart';
+import 'package:fodinha_flutter/model/player/player_repository.dart';
 import 'package:isar/isar.dart';
 import 'package:mobx/mobx.dart';
 
@@ -23,6 +23,39 @@ abstract class _PlayerViewModelBase with Store {
     int randomColor = colors[randomColorIndex];
 
     return randomColor;
+  }
+
+  //startScreen actions
+  @action
+  Future<void> newGame() async{
+    final isarDB = await PlayerRepository().openDB();
+    
+    for (var item in _playerList) {
+      await isarDB.writeTxn(() async {
+        await isarDB.playerModels.delete(item.playerID);  
+      });
+  
+    } 
+
+    await getPlayerList();
+  }
+
+  @action
+  Future<void> resetStats() async{
+    final isarDB = await PlayerRepository().openDB();
+    
+    for (var item in _playerList) {
+
+      item.count = 0;
+      item.points = 0;
+      item.dealer = false;
+
+      await isarDB.writeTxn(() async {
+        await isarDB.playerModels.put(item);  
+      });
+    } 
+
+    await getPlayerList();
   }
 
   //PlayerScreen actions
@@ -60,7 +93,7 @@ abstract class _PlayerViewModelBase with Store {
 
     await isarDB.writeTxn(() async {
      
-      if(players.isEmpty){
+      if(players.isEmpty && _playerList.isNotEmpty){
         _playerList[0].dealer = true;
         isarDB.playerModels.put(_playerList[0]);
       }
@@ -150,8 +183,6 @@ abstract class _PlayerViewModelBase with Store {
   @action
   Future<void> updatePlayersLostRound(List<int> players) async{
     final isarDB = await PlayerRepository().openDB();
-
-    print(players);
 
     var playersToUpdate = await isarDB.playerModels.getAll(players);
 

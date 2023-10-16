@@ -8,8 +8,10 @@ import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/components/molecules/player.dart';
 import 'package:fodinha_flutter/components/organism/dialogs.dart';
 import 'package:fodinha_flutter/shared/constants/avatar.dart';
-import 'package:fodinha_flutter/model/player.dart';
+import 'package:fodinha_flutter/model/player/player.dart';
 import 'package:fodinha_flutter/views/playerscreen/controller/playerscreen_controller.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 import 'package:provider/provider.dart';
 import '../../view_model/player_view_model.dart';
 
@@ -25,13 +27,19 @@ class MainList extends StatelessWidget {
     final _formKey = GlobalKey<FormState>();
     final inputController = TextEditingController();
     
-    return Center(
-    child: Column(
+    return Column(
       children: [
         Observer(
             builder: (BuildContext context) { 
               return store.playerList.isEmpty
-              ? const Text("Nenhum jogador")
+              ? Container(
+                height: MediaQuery.of(context).size.height / 1.2,
+                alignment: Alignment.center,
+                child: const Text("Nenhum jogador",
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold))
+                )
               : GridView.builder(
                   shrinkWrap: true,
                   itemCount: store.playerList.length,
@@ -82,7 +90,7 @@ class MainList extends StatelessWidget {
             },
          
         ),
-
+    
         Observer(
           builder: (context){
             return 
@@ -140,8 +148,17 @@ class MainList extends StatelessWidget {
                     text: "Começar jogo",
                     icon: const Icon(Icons.sports_esports_outlined),
                     onPressed: (){
-                          Navigator.pushReplacementNamed(context, "/GameScreen");
-                    })
+                      if(store.playerList.length < 2){
+                        MotionToast.error(
+                          title:  const Text("Erro"),               
+                          description:  const Text("Deve ter no mínimo dois jogadores para começar"),
+                          position: MotionToastPosition.top,
+                        ).show(context);
+                        return;
+                      }
+                      Navigator.pushReplacementNamed(context, "/GameScreen");
+                    }
+                  )
                 ],
                 ) :  DragTarget<int>(
                       onMove: (details){
@@ -175,7 +192,6 @@ class MainList extends StatelessWidget {
             }
           ),
       ],
-    ),
     );
   }
 }

@@ -19,6 +19,13 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Provider.of<PlayerViewModel>(context).getPlayerList();
+  }
+
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<PlayerViewModel>(context);
@@ -51,12 +58,14 @@ class _GameScreenState extends State<GameScreen> {
                           color: Colors.white70,
                         )) 
                       ],
-                    )
+                    ),
+
+                    
                   ],
                   );
                 },
               ),
-           
+                             
               Expanded(
                 child: Stack(
                   children: [
@@ -68,74 +77,77 @@ class _GameScreenState extends State<GameScreen> {
                           crossAxisCount: 2,
                           childAspectRatio: 1), 
                         itemBuilder: (context, index) {
-                          return Stack(
-                            children: [
-                              
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,                            
-                                children: [
-                                  
-                                  Player(
-                                    data: store.playerList[index],
-                                    showCounter: true, 
-                                    child: AvatarPlayerCircle(data: store.playerList[index])),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("${store.playerList[index].count}",
-                                      style: const TextStyle(
-                                        fontSize: 22,
-                                        color: Colors.white70
-                                      )),
-                                      OverflowBar(
-                                        children: [
-                                          
-                                          IconButton(                                 
-                                          onPressed: () {
-                                            if(store.playerList[index].count > 0 ) {
-                                              store.countHowManyRoundsPlayerDo(store.playerList[index].count - 1, store.playerList[index].playerID);                      
-                                              return;
-                                            }                     
-                                          },  
-                                          disabledColor: Colors.grey,  
-                                          splashColor: Colors.indigo.withOpacity(0.3),                                       
-                                          icon: const Icon(Icons.remove_circle,
-                                          size: 32,
-                                          color: Colors.indigo )), 
-                                                            
-                                          IconButton(
-                                          onPressed: () {
-                                            if(store.playerList[index].count < controller.cards.value ) {
-                                              store.countHowManyRoundsPlayerDo(store.playerList[index].count + 1, store.playerList[index].playerID);                     
-                                              return;
-                                            }                                
-                                          }, 
-                                          disabledColor: Colors.grey,  
-                                          splashColor: Colors.indigo.withOpacity(0.3),
-                                          icon: const Icon(Icons.add_circle,                                 
-                                          size: 32,
-                                          color: Colors.indigo))
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-
-                                                         
-                                Container(                                                       
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.only(bottom: store.playerList.length - 1 == index ? 70 : 0),
-                                  child: store.playerList[index].points == 5 ? 
-                                  SvgPicture.asset("assets/selo-eliminado.svg",
-                                  // ignore: deprecated_member_use
-                                  color: Colors.red,
-                                  width: 100,
-                                  height: 100) 
-                                  : Container(),
+                          return Container(
+                            margin: EdgeInsets.only(bottom: store.playerList.length >= 8 ? store.playerList.length - 2 <= index ? 70 : 0 : 0),
+                            child: Stack(
+                              children: [
+                                
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,                                                             
+                                  children: [
+                                    
+                                    Player(
+                                      data: store.playerList[index],
+                                      showCounter: true, 
+                                      child: AvatarPlayerCircle(data: store.playerList[index])),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("${store.playerList[index].count}",
+                                        style: const TextStyle(
+                                          fontSize: 22,
+                                          color: Colors.white70
+                                        )),
+                                        OverflowBar(
+                                          children: [
+                                            
+                                            IconButton(                                 
+                                            onPressed: () {
+                                              if(store.playerList[index].count > 0 ) {
+                                                store.countHowManyRoundsPlayerDo(store.playerList[index].count - 1, store.playerList[index].playerID);                      
+                                                return;
+                                              }                     
+                                            },  
+                                            disabledColor: Colors.grey,  
+                                            splashColor: Colors.indigo.withOpacity(0.3),                                       
+                                            icon: const Icon(Icons.remove_circle,
+                                            size: 32,
+                                            color: Colors.indigo )), 
+                                                              
+                                            IconButton(
+                                            onPressed: () {
+                                              if(store.playerList[index].count < controller.cards.value ) {
+                                                store.countHowManyRoundsPlayerDo(store.playerList[index].count + 1, store.playerList[index].playerID);                     
+                                                return;
+                                              }                                
+                                            }, 
+                                            disabledColor: Colors.grey,  
+                                            splashColor: Colors.indigo.withOpacity(0.3),
+                                            icon: const Icon(Icons.add_circle,                                 
+                                            size: 32,
+                                            color: Colors.indigo))
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
-                              
-                            ],
+                                                                                    
+                                Positioned.fill(
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: store.playerList[index].points == 5 ? 
+                                    SvgPicture.asset("assets/selo-eliminado.svg",
+                                    // ignore: deprecated_member_use
+                                      color: Colors.red,
+                                      width: 100,
+                                      height: 100
+                                    ) 
+                                    : Container(),
+                                  ),
+                                ),                                                         
+                              ],
+                            ),
                           );
                         });
                        },
@@ -166,9 +178,7 @@ class _GameScreenState extends State<GameScreen> {
                     )
                   ],
                 ),
-              ),
-                
-              
+              ),               
             ],
           ),
         ),

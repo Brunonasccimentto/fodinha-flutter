@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fodinha_flutter/model/player.dart';
+import 'package:fodinha_flutter/model/player/player.dart';
 
 class CircleColor extends StatelessWidget {
   final double? width;
@@ -23,6 +23,7 @@ class CircleColor extends StatelessWidget {
           child: Text(
             data.name.substring(0, 2).toUpperCase(),
             style: TextStyle(
+              decoration: TextDecoration.none,
               color: Colors.white, fontSize: labelSize ?? 22),
           ),
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fodinha_flutter/components/atoms/circle_color.dart';
-import 'package:fodinha_flutter/model/player.dart';
+import 'package:fodinha_flutter/model/player/player.dart';
 
 class AvatarPlayerCircle extends StatelessWidget {
   final dynamic data;

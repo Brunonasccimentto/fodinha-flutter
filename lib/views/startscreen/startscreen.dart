@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fodinha_flutter/view_model/player_view_model.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
+import 'package:provider/provider.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<PlayerViewModel>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
@@ -21,6 +26,7 @@ class StartScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) 
                     ),
                     onPressed: () {
+                      store.newGame();
                       Navigator.pushNamed(context, "/PlayerScreen");
                     }, 
                     child: const Text("Novo jogo")),
@@ -32,7 +38,16 @@ class StartScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) 
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, "/PlayerScreen");
+                    if(store.playerList.isNotEmpty){
+                      Navigator.pushNamed(context, "/GameScreen");
+                      return;
+                    }
+                    
+                    MotionToast.error(
+                      title:  const Text("Erro"),                    
+                      description:  const Text("Não existe nenhum jogo salvo"),
+                      position: MotionToastPosition.top,
+                    ).show(context);
                   }, 
                   child: const Text("Carregar jogo"))
                 ],

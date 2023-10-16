@@ -1,4 +1,4 @@
-import 'package:fodinha_flutter/model/player.dart';
+import 'package:fodinha_flutter/model/player/player.dart';
 import 'package:fodinha_flutter/views/gamescreen/entities/cards.dart';
 import 'package:mobx/mobx.dart';
 import 'package:fodinha_flutter/shared/enums/count.dart';
@@ -22,12 +22,14 @@ abstract class _GameScreenControllerBase with Store {
   @observable
   List<int> _playersLostRound = [];
 
+  @observable
+  String winner = '';
+
   @computed
   List<int> get playersLostRound => _playersLostRound;
 
   set playersLostRound(value){
     _playersLostRound = [..._playersLostRound, value];
-    print(_playersLostRound);
   }
 
   @action
@@ -38,6 +40,10 @@ abstract class _GameScreenControllerBase with Store {
     });
 
     return sum;
+  }
+
+  void _resetPlayersLostRound(){
+    _playersLostRound = [];
   }
 
   @action
@@ -52,9 +58,10 @@ abstract class _GameScreenControllerBase with Store {
         cards.increment = Count.increment;
     } 
 
+  _resetPlayersLostRound();
   }
 
-  String gameWinner(List<PlayerModel> players) {
+  void gameWinner(List<PlayerModel> players) {
   List<int> playerPoints = players.map((item) => item.points).toList();
   int howManyHaveFive = 0;
 
@@ -65,10 +72,13 @@ abstract class _GameScreenControllerBase with Store {
   if (players.length - 1 == howManyHaveFive) {
     int winnerIndex = playerPoints.indexWhere((element) => element != 5);
     String winnerName = players[winnerIndex].name;
-    return ('Parabéns $winnerName você ganhou o jogo');
+
+    winner = 'Parabéns $winnerName você ganhou o jogo';
+    print("teve ganhador");
   }
 
-  return "";
+  print("ativou");
+
   }  
 
 }

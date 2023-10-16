@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fodinha_flutter/model/player.dart';
+import 'package:fodinha_flutter/model/player/player.dart';
 
 // ignore: must_be_immutable
 class Player extends StatelessWidget {

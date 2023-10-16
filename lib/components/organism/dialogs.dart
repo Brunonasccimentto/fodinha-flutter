@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fodinha_flutter/components/atoms/circle_color.dart';
-import 'package:fodinha_flutter/model/player.dart';
+import 'package:fodinha_flutter/model/player/player.dart';
 import 'package:fodinha_flutter/views/playerscreen/controller/playerscreen_controller.dart';
 
 class Dialogs extends StatelessWidget {
