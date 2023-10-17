@@ -4,9 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fodinha_flutter/components/atoms/avatar_player_circle.dart';
 import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/components/molecules/player.dart';
+import 'package:fodinha_flutter/view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
 import 'package:fodinha_flutter/views/gamescreen/components/winner_dialog.dart';
-import 'package:fodinha_flutter/views/gamescreen/controller/gamescreen_controller.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 import 'package:provider/provider.dart';
@@ -22,14 +22,14 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<PlayerViewModel>(context);
-    final controller = Provider.of<GameScreenController>(context);
+    final gameScreenStore = Provider.of<GamescreenViewModel>(context);
 
     void openDialog() {
       showDialog(
         context: context, 
         builder: (BuildContext context) {
           return WinnerWidget(
-            winner: controller.winner, 
+            winner: gameScreenStore.winner, 
             onContinuePressed: () { 
               store.resetStats();
               Navigator.pushReplacementNamed(context, '/GameScreen');
@@ -55,7 +55,7 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
                     return Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsets.only(top: 30),
-                      child: Text("Quem perdeu a rodada ${controller.round} ?",
+                      child: Text("Quem perdeu a rodada ${gameScreenStore.scoreboard.round} ?",
                       style: const TextStyle(
                         fontSize: 24,
                         color: Colors.white70,
@@ -83,13 +83,13 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
                                   data: store.playerList[index],
                                   showCounter: false,            
                                   child: AvatarPlayerCircle(data: store.playerList[index],
-                                  filter: controller.playersLostRound.contains(store.playerList[index].playerID) ? 
+                                  filter: gameScreenStore.playersLostRound.contains(store.playerList[index].playerID) ? 
                                   ColorFilter.mode(Colors.indigo.shade300, BlendMode.modulate) : const ColorFilter.mode(Colors.transparent, BlendMode.color)) 
                                 ),
                                 onTap: () {
-                                  controller.playersLostRound.contains(store.playerList[index].playerID) ?
-                                  controller.playersLostRound.remove(store.playerList[index].playerID) :                              
-                                  controller.playersLostRound = store.playerList[index].playerID;
+                                  gameScreenStore.playersLostRound.contains(store.playerList[index].playerID) ?
+                                  gameScreenStore.playersLostRound.remove(store.playerList[index].playerID) :                              
+                                  gameScreenStore.playersLostRound = store.playerList[index].playerID;
                           
                                   store.getPlayerList();
                                     
@@ -119,7 +119,7 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
                         alignment: Alignment.bottomCenter,
                         child: ElevatedTextButtonDefault(
                           onPressed: () async { 
-                            if(controller.playersLostRound.isEmpty){
+                            if(gameScreenStore.playersLostRound.isEmpty){
                               MotionToast.error(
                                 title:  const Text("Erro"),
                                 height: 80,
@@ -129,14 +129,15 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
                               return;
                             }
 
-                            await store.updatePlayersLostRound(controller.playersLostRound);
-                            controller.gameWinner(store.playerList);  
+                            await store.updatePlayersLostRound(gameScreenStore.playersLostRound);
+                            gameScreenStore.gameWinner(store.playerList);  
 
-                            if(controller.winner.isNotEmpty) {
+                            if(gameScreenStore.winner.isNotEmpty) {
                               openDialog();
                             } else {
                                 await store.roundDealer();                                                                                                         
-                                controller.howManyCards();                                                  
+                                gameScreenStore.updateRound(gameScreenStore.scoreboard.scoreboardID);                                              
+                                // ignore: use_build_context_synchronously
                                 Navigator.pushReplacementNamed(context, "/GameScreen");
                             }
                           }, 

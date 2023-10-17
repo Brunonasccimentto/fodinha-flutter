@@ -6,8 +6,8 @@ part "scoreboard.g.dart";
 @Collection()
 class ScoreboardModel {
   Id scoreboardID = Isar.autoIncrement;
-  int round = 0;
-  int cards = 0;
+  int round = 1;
+  int cards = 1;
   final players = IsarLinks<PlayerModel>();
   
 

@@ -7,5 +7,5 @@ class DatabaseService {
 
   DatabaseService._internal();
 
-  
+ 
 }

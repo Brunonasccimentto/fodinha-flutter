@@ -41,6 +41,14 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     return _$newGameAsyncAction.run(() => super.newGame());
   }
 
+  late final _$resetStatsAsyncAction =
+      AsyncAction('_PlayerViewModelBase.resetStats', context: context);
+
+  @override
+  Future<void> resetStats() {
+    return _$resetStatsAsyncAction.run(() => super.resetStats());
+  }
+
   late final _$createPlayerAsyncAction =
       AsyncAction('_PlayerViewModelBase.createPlayer', context: context);
 
@@ -108,6 +116,15 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   Future<void> updatePlayersLostRound(List<int> players) {
     return _$updatePlayersLostRoundAsyncAction
         .run(() => super.updatePlayersLostRound(players));
+  }
+
+  late final _$getListOfPlayersIdsAsyncAction =
+      AsyncAction('_PlayerViewModelBase.getListOfPlayersIds', context: context);
+
+  @override
+  Future<List<int>> getListOfPlayersIds() {
+    return _$getListOfPlayersIdsAsyncAction
+        .run(() => super.getListOfPlayersIds());
   }
 
   @override

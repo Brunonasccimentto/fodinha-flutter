@@ -4,8 +4,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fodinha_flutter/components/atoms/avatar_player_circle.dart';
 import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/components/molecules/player.dart';
+import 'package:fodinha_flutter/view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
-import 'package:fodinha_flutter/views/gamescreen/controller/gamescreen_controller.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +29,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<PlayerViewModel>(context);
-    final controller = Provider.of<GameScreenController>(context);
+    final gameScreenStore = Provider.of<GamescreenViewModel>(context);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 125, 139, 218),
@@ -43,7 +43,7 @@ class _GameScreenState extends State<GameScreen> {
                   return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text("Round ${controller.round}",
+                    Text("Round ${gameScreenStore.scoreboard.round}",
                     style: const TextStyle(
                       fontSize: 32,
                       color: Colors.white70,
@@ -53,7 +53,7 @@ class _GameScreenState extends State<GameScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.play_for_work_rounded),
-                        Text("Cards ${controller.cards.value}",
+                        Text("Cards ${gameScreenStore.scoreboard.cards}",
                         style: const TextStyle(                       
                           color: Colors.white70,
                         )) 
@@ -116,7 +116,7 @@ class _GameScreenState extends State<GameScreen> {
                                                               
                                             IconButton(
                                             onPressed: () {
-                                              if(store.playerList[index].count < controller.cards.value ) {
+                                              if(store.playerList[index].count < gameScreenStore.scoreboard.cards ) {
                                                 store.countHowManyRoundsPlayerDo(store.playerList[index].count + 1, store.playerList[index].playerID);                     
                                                 return;
                                               }                                
@@ -158,9 +158,9 @@ class _GameScreenState extends State<GameScreen> {
                         alignment: Alignment.bottomCenter,
                         child: ElevatedTextButtonDefault(
                           onPressed: () {
-                            var sum = controller.sumAllPlayerCountValues(store.playerList);
+                            var sum = gameScreenStore.sumAllPlayerCountValues(store.playerList);
                 
-                              if (controller.cards.value == sum) {
+                              if (gameScreenStore.cards.value == sum) {
                                 HapticFeedback.vibrate(); 
                                 MotionToast.error(
                                   title:  const Text("Erro"),

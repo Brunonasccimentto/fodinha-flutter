@@ -1,8 +1,8 @@
 
 import 'package:fodinha_flutter/model/player/player.dart';
+import 'package:fodinha_flutter/model/services/app_repository.dart';
 import 'dart:math';
 import 'package:fodinha_flutter/shared/constants/colors.dart';
-import 'package:fodinha_flutter/model/player/player_repository.dart';
 import 'package:isar/isar.dart';
 import 'package:mobx/mobx.dart';
 
@@ -28,7 +28,7 @@ abstract class _PlayerViewModelBase with Store {
   //startScreen actions
   @action
   Future<void> newGame() async{
-    final isarDB = await PlayerRepository().openDB();
+    final isarDB = await AppRepository().openDB();
     
     for (var item in _playerList) {
       await isarDB.writeTxn(() async {
@@ -42,13 +42,12 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   Future<void> resetStats() async{
-    final isarDB = await PlayerRepository().openDB();
+    final isarDB = await AppRepository().openDB();
     
     for (var item in _playerList) {
 
       item.count = 0;
       item.points = 0;
-      item.dealer = false;
 
       await isarDB.writeTxn(() async {
         await isarDB.playerModels.put(item);  
@@ -63,7 +62,7 @@ abstract class _PlayerViewModelBase with Store {
   Future<void> createPlayer(PlayerModel player) async{
 
     if(playerList.length < 10){
-      final isarDB = await PlayerRepository().openDB();
+      final isarDB = await AppRepository().openDB();
       playerList.isEmpty ? player.dealer = true : player.dealer = false;
       player.color = _randomColor();
 
@@ -77,7 +76,7 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   Future<void> deletePlayer(int playerID) async{
-    final isarDB = await PlayerRepository().openDB();
+    final isarDB = await AppRepository().openDB();
 
     await isarDB.writeTxn(() async {
       await isarDB.playerModels.delete(playerID);
@@ -88,7 +87,7 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   Future<List<PlayerModel>> getPlayerList() async{
-    final isarDB = await PlayerRepository().openDB();
+    final isarDB = await AppRepository().openDB();
     final players = await isarDB.playerModels.filter().dealerEqualTo(true).findAll();
 
     await isarDB.writeTxn(() async {
@@ -106,7 +105,7 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   Future<void> updatePicture(int playerID, String asset) async{
-    final isarDB = await PlayerRepository().openDB();
+    final isarDB = await AppRepository().openDB();
 
     var updatedPlayer = await isarDB.playerModels.get(playerID);
     updatedPlayer!.picture = asset;
@@ -121,7 +120,7 @@ abstract class _PlayerViewModelBase with Store {
   //GameScreen actions
   @action
   Future<void> setDealer(int playerID) async{
-    final isarDB = await PlayerRepository().openDB();
+    final isarDB = await AppRepository().openDB();
 
     var oldDealer = await isarDB.playerModels.filter().dealerEqualTo(true).findFirst();
     var newDealer = await isarDB.playerModels.get(playerID);
@@ -138,7 +137,7 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   Future<void> countHowManyRoundsPlayerDo(int payload, int playerID) async{
-    final isarDB = await PlayerRepository().openDB();
+    final isarDB = await AppRepository().openDB();
 
     var updatePlayerCount = await isarDB.playerModels.get(playerID);
     updatePlayerCount!.count = payload;
@@ -152,7 +151,7 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   Future<void> roundDealer() async {
-    final isarDB = await PlayerRepository().openDB();
+    final isarDB = await AppRepository().openDB();
     var dealer = _playerList.where((item) => item.points < 5).toList();
     var dealerFiltedArray = dealer.map((item) => item.dealer).toList();
     var lastDealerIndex = dealerFiltedArray.indexWhere((element) => element == true );
@@ -182,7 +181,7 @@ abstract class _PlayerViewModelBase with Store {
   //GameScreenEndActions
   @action
   Future<void> updatePlayersLostRound(List<int> players) async{
-    final isarDB = await PlayerRepository().openDB();
+    final isarDB = await AppRepository().openDB();
 
     var playersToUpdate = await isarDB.playerModels.getAll(players);
 
@@ -195,5 +194,13 @@ abstract class _PlayerViewModelBase with Store {
     }
     
     await getPlayerList();
+  }
+
+  @action
+  Future<List<int>> getListOfPlayersIds() async{
+    final isarDB = await AppRepository().openDB();
+    final List<int> listPlayersIds = await isarDB.playerModels.where().playerIDProperty().findAll();
+
+    return listPlayersIds;
   }
 }

@@ -1,5 +1,4 @@
 import 'package:isar/isar.dart';
-
 part "player.g.dart";
 
 @Collection()

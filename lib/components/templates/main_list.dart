@@ -7,8 +7,10 @@ import 'package:fodinha_flutter/components/atoms/custom_field.dart';
 import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/components/molecules/player.dart';
 import 'package:fodinha_flutter/components/organism/dialogs.dart';
+import 'package:fodinha_flutter/model/scoreboard/scoreboard.dart';
 import 'package:fodinha_flutter/shared/constants/avatar.dart';
 import 'package:fodinha_flutter/model/player/player.dart';
+import 'package:fodinha_flutter/view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/views/playerscreen/controller/playerscreen_controller.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
@@ -23,7 +25,7 @@ class MainList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const avatarData = avatar;
-    var store = Provider.of<PlayerViewModel>(context);
+    final store = Provider.of<PlayerViewModel>(context);
     final _formKey = GlobalKey<FormState>();
     final inputController = TextEditingController();
     
@@ -147,7 +149,7 @@ class MainList extends StatelessWidget {
                   ElevatedTextButtonDefault(                  
                     text: "Começar jogo",
                     icon: const Icon(Icons.sports_esports_outlined),
-                    onPressed: (){
+                    onPressed: () async {
                       if(store.playerList.length < 2){
                         MotionToast.error(
                           title:  const Text("Erro"),               
@@ -156,6 +158,9 @@ class MainList extends StatelessWidget {
                         ).show(context);
                         return;
                       }
+                      store.resetStats();
+                      await Provider.of<GamescreenViewModel>(context, listen: false).newGame(ScoreboardModel(), store.playerList);
+                      // ignore: use_build_context_synchronously
                       Navigator.pushReplacementNamed(context, "/GameScreen");
                     }
                   )

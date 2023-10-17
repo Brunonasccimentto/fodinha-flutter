@@ -1,15 +1,31 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:fodinha_flutter/view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 import 'package:provider/provider.dart';
 
-class StartScreen extends StatelessWidget {
+class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
 
   @override
+  State<StartScreen> createState() => _StartScreenState();
+}
+
+class _StartScreenState extends State<StartScreen> {
+
+  @override
+  void initState() {
+    Provider.of<PlayerViewModel>(context, listen: false).getPlayerList();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final store = Provider.of<PlayerViewModel>(context);
+    final scoreboardStore = Provider.of<GamescreenViewModel>(context);
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
@@ -25,8 +41,8 @@ class StartScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) 
                     ),
-                    onPressed: () {
-                      store.newGame();
+                    onPressed: () async {                   
+                      
                       Navigator.pushNamed(context, "/PlayerScreen");
                     }, 
                     child: const Text("Novo jogo")),
@@ -37,8 +53,9 @@ class StartScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) 
                   ),
-                  onPressed: () {
-                    if(store.playerList.isNotEmpty){
+                  onPressed: () async {
+                    final savedGames = await scoreboardStore.listAllSavedGames();
+                    if(savedGames.isNotEmpty){
                       Navigator.pushNamed(context, "/GameScreen");
                       return;
                     }
@@ -49,7 +66,15 @@ class StartScreen extends StatelessWidget {
                       position: MotionToastPosition.top,
                     ).show(context);
                   }, 
-                  child: const Text("Carregar jogo"))
+                  child: const Text("Carregar jogo")),
+
+                  // TextButton(
+                  //   onPressed: scoreboardStore.closeInstance, 
+                  //   child: Text("delete instance",style: TextStyle(color: Colors.white),)),
+
+                  TextButton(
+                    onPressed: () {Navigator.pushNamed(context, "/LoadingScreen");} , 
+                    child: const Text("loading",style: TextStyle(color: Colors.white),))
                 ],
               )
             ]),
