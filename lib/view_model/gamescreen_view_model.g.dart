@@ -107,13 +107,12 @@ mixin _$GamescreenViewModel on GamescreenViewModelBase, Store {
     return _$newGameAsyncAction.run(() => super.newGame(scoreboard, players));
   }
 
-  late final _$listAllSavedGamesAsyncAction = AsyncAction(
-      'GamescreenViewModelBase.listAllSavedGames',
-      context: context);
+  late final _$resetStatsAsyncAction =
+      AsyncAction('GamescreenViewModelBase.resetStats', context: context);
 
   @override
-  Future<List<ScoreboardModel>> listAllSavedGames() {
-    return _$listAllSavedGamesAsyncAction.run(() => super.listAllSavedGames());
+  Future<void> resetStats() {
+    return _$resetStatsAsyncAction.run(() => super.resetStats());
   }
 
   late final _$GamescreenViewModelBaseActionController =

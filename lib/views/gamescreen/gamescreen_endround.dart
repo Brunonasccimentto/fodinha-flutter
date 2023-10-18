@@ -11,14 +11,9 @@ import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 import 'package:provider/provider.dart';
 
-class GameScreenEndRound extends StatefulWidget {
+class GameScreenEndRound extends StatelessWidget {
   const GameScreenEndRound({super.key});
 
-  @override
-  State<GameScreenEndRound> createState() => _GameScreenEndRoundState();
-}
-
-class _GameScreenEndRoundState extends State<GameScreenEndRound> {
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<PlayerViewModel>(context);
@@ -28,15 +23,16 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
       showDialog(
         context: context, 
         builder: (BuildContext context) {
-          return WinnerWidget(
+          return WinnerDialog(
             winner: gameScreenStore.winner, 
             onContinuePressed: () { 
               store.resetStats();
+              gameScreenStore.resetStats();
               Navigator.pushReplacementNamed(context, '/GameScreen');
              }, 
             onNewGamePressed: () { 
               store.newGame();
-              Navigator.pushReplacementNamed(context, '/GameScreen');
+              Navigator.pushReplacementNamed(context, '/PlayerScreen');
              },
             );
         });
@@ -91,8 +87,7 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
                                   gameScreenStore.playersLostRound.remove(store.playerList[index].playerID) :                              
                                   gameScreenStore.playersLostRound = store.playerList[index].playerID;
                           
-                                  store.getPlayerList();
-                                    
+                                  store.getPlayerList();                                  
                                 },
                               ),
 
@@ -140,7 +135,7 @@ class _GameScreenEndRoundState extends State<GameScreenEndRound> {
                                 // ignore: use_build_context_synchronously
                                 Navigator.pushReplacementNamed(context, "/GameScreen");
                             }
-                          }, 
+                          },
                           text: "Finalizar rodada"),
                       ),
                     )

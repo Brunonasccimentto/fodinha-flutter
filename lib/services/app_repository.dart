@@ -1,6 +1,6 @@
 import 'package:fodinha_flutter/model/player/player.dart';
 import 'package:fodinha_flutter/model/scoreboard/scoreboard.dart';
-import 'package:fodinha_flutter/model/services/database.dart';
+import 'package:fodinha_flutter/services/database.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 

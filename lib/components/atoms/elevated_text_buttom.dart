@@ -4,7 +4,8 @@ class ElevatedTextButtonDefault extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
   final Icon? icon;
-  const ElevatedTextButtonDefault({ required this.onPressed, required this.text, this.icon, Key? key}) : super(key: key);
+  final Size? size; 
+  const ElevatedTextButtonDefault({ required this.onPressed, required this.text, this.icon, this.size, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class ElevatedTextButtonDefault extends StatelessWidget {
         elevation: 10,
         backgroundColor: Colors.indigo,  
          
-        fixedSize: Size(MediaQuery.of(context).size.width / 2.2, 50),     
+        fixedSize: size ?? Size(MediaQuery.of(context).size.width / 2.2, 50),     
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))
       ),
       onPressed: onPressed, 

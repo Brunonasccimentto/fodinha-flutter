@@ -15,7 +15,7 @@ import 'package:fodinha_flutter/views/playerscreen/controller/playerscreen_contr
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 import 'package:provider/provider.dart';
-import '../../view_model/player_view_model.dart';
+import '../../../view_model/player_view_model.dart';
 
 class MainList extends StatelessWidget {
   final PlayerScreenController controller;

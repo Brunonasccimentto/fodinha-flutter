@@ -22,8 +22,8 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   void didChangeDependencies() {
+    Provider.of<GamescreenViewModel>(context).updateScoreBoard(1);
     super.didChangeDependencies();
-    Provider.of<PlayerViewModel>(context).getPlayerList();
   }
 
   @override
@@ -160,7 +160,7 @@ class _GameScreenState extends State<GameScreen> {
                           onPressed: () {
                             var sum = gameScreenStore.sumAllPlayerCountValues(store.playerList);
                 
-                              if (gameScreenStore.cards.value == sum) {
+                              if (gameScreenStore.scoreboard.cards == sum) {
                                 HapticFeedback.vibrate(); 
                                 MotionToast.error(
                                   title:  const Text("Erro"),

@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:fodinha_flutter/view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
@@ -24,7 +23,7 @@ class _StartScreenState extends State<StartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final scoreboardStore = Provider.of<GamescreenViewModel>(context);
+    final store = Provider.of<PlayerViewModel>(context);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -42,7 +41,7 @@ class _StartScreenState extends State<StartScreen> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) 
                     ),
                     onPressed: () async {                   
-                      
+                      await store.newGame();
                       Navigator.pushNamed(context, "/PlayerScreen");
                     }, 
                     child: const Text("Novo jogo")),
@@ -53,9 +52,8 @@ class _StartScreenState extends State<StartScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) 
                   ),
-                  onPressed: () async {
-                    final savedGames = await scoreboardStore.listAllSavedGames();
-                    if(savedGames.isNotEmpty){
+                  onPressed: () async {                    
+                    if(store.playerList.isNotEmpty && store.playerList.length >= 2){
                       Navigator.pushNamed(context, "/GameScreen");
                       return;
                     }
@@ -68,13 +66,6 @@ class _StartScreenState extends State<StartScreen> {
                   }, 
                   child: const Text("Carregar jogo")),
 
-                  // TextButton(
-                  //   onPressed: scoreboardStore.closeInstance, 
-                  //   child: Text("delete instance",style: TextStyle(color: Colors.white),)),
-
-                  TextButton(
-                    onPressed: () {Navigator.pushNamed(context, "/LoadingScreen");} , 
-                    child: const Text("loading",style: TextStyle(color: Colors.white),))
                 ],
               )
             ]),

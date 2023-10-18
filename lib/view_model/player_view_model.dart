@@ -1,6 +1,6 @@
 
 import 'package:fodinha_flutter/model/player/player.dart';
-import 'package:fodinha_flutter/model/services/app_repository.dart';
+import 'package:fodinha_flutter/services/app_repository.dart';
 import 'dart:math';
 import 'package:fodinha_flutter/shared/constants/colors.dart';
 import 'package:isar/isar.dart';
@@ -29,14 +29,13 @@ abstract class _PlayerViewModelBase with Store {
   @action
   Future<void> newGame() async{
     final isarDB = await AppRepository().openDB();
-    
-    for (var item in _playerList) {
-      await isarDB.writeTxn(() async {
-        await isarDB.playerModels.delete(item.playerID);  
-      });
-  
-    } 
 
+    await isarDB.writeTxn(() async {
+      await isarDB.playerModels.clear(); 
+    });
+
+    print("clear");
+  
     await getPlayerList();
   }
 
@@ -77,8 +76,9 @@ abstract class _PlayerViewModelBase with Store {
   @action
   Future<void> deletePlayer(int playerID) async{
     final isarDB = await AppRepository().openDB();
+   
 
-    await isarDB.writeTxn(() async {
+    await isarDB.writeTxn(() async {   
       await isarDB.playerModels.delete(playerID);
     });
 
@@ -89,14 +89,14 @@ abstract class _PlayerViewModelBase with Store {
   Future<List<PlayerModel>> getPlayerList() async{
     final isarDB = await AppRepository().openDB();
     final players = await isarDB.playerModels.filter().dealerEqualTo(true).findAll();
+    final newDealer = await isarDB.playerModels.filter().dealerEqualTo(false).findFirst();
 
     await isarDB.writeTxn(() async {
-     
-      if(players.isEmpty && _playerList.isNotEmpty){
-        _playerList[0].dealer = true;
-        isarDB.playerModels.put(_playerList[0]);
-      }
+      if(players.isEmpty && _playerList.isNotEmpty && newDealer != null){
+        newDealer.dealer = true;
+        await isarDB.playerModels.put(newDealer);
 
+      }
        _playerList = await isarDB.playerModels.where().findAll();
     });
 

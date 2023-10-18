@@ -11,6 +11,8 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+
+  // possivel update - AllgamesSaved
  
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 125, 139, 218),
         body: FutureBuilder(
-          future: store.listAllSavedGames(),
+          // future: store.listAllSavedGames(),
           builder: (BuildContext context, AsyncSnapshot<List<ScoreboardModel>> snapshot) {        
             if(snapshot.hasData){
              return ListView.builder(

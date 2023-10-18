@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fodinha_flutter/components/templates/main_list.dart';
+import 'package:fodinha_flutter/views/playerscreen/components/main_list.dart';
 import 'package:fodinha_flutter/view_model/player_view_model.dart';
 import 'package:fodinha_flutter/model/player/player.dart';
 import 'package:fodinha_flutter/views/playerscreen/controller/playerscreen_controller.dart';

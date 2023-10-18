@@ -1,6 +1,6 @@
 import 'package:fodinha_flutter/model/player/player.dart';
 import 'package:fodinha_flutter/model/scoreboard/scoreboard.dart';
-import 'package:fodinha_flutter/model/services/app_repository.dart';
+import 'package:fodinha_flutter/services/app_repository.dart';
 import 'package:fodinha_flutter/shared/enums/count.dart';
 import 'package:fodinha_flutter/views/gamescreen/entities/cards.dart';
 import 'package:isar/isar.dart';
@@ -73,23 +73,19 @@ abstract class GamescreenViewModelBase with Store {
 
   @action
   void gameWinner(List<PlayerModel> players) {
-  List<int> playerPoints = players.map((item) => item.points).toList();
-  int howManyHaveFive = 0;
+    List<int> playerPoints = players.map((item) => item.points).toList();
+    int howManyHaveFive = 0;
 
-  for (int i = 0; i < playerPoints.length; i++) {
-    if (playerPoints[i] == 5) howManyHaveFive++;
-  }
+    for (int i = 0; i < playerPoints.length; i++) {
+      if (playerPoints[i] == 5) howManyHaveFive++;
+    }
 
-  if (players.length - 1 == howManyHaveFive) {
-    int winnerIndex = playerPoints.indexWhere((element) => element != 5);
-    String winnerName = players[winnerIndex].name;
+    if (players.length - 1 == howManyHaveFive) {
+      int winnerIndex = playerPoints.indexWhere((element) => element != 5);
+      String winnerName = players[winnerIndex].name;
 
-    winner = 'Parabéns $winnerName você ganhou o jogo';
-    print("teve ganhador");
-  }
-
-  print("ativou");
-
+      winner = 'Parabéns $winnerName você ganhou o jogo';
+    }
   }  
  
   @action
@@ -123,22 +119,40 @@ abstract class GamescreenViewModelBase with Store {
     final isarDB = await AppRepository().openDB();
 
     await isarDB.writeTxn(() async { 
+      await isarDB.scoreboardModels.clear();           // medida provisória para não ocupar memoria / possivel update - AllgamesSaved //
       await isarDB.scoreboardModels.put(scoreboard);  
     });
+
+    _scoreboard = scoreboard;
   
     await saveLinkedPlayers(scoreboard, players);
   }
 
   @action
-  Future<List<ScoreboardModel>> listAllSavedGames() async {
+  Future<void> resetStats() async {
     final isarDB = await AppRepository().openDB();
-    final list = await isarDB.scoreboardModels.where().findAll();
 
-    return list;
+    final update = await isarDB.scoreboardModels.where().findFirst();
+    update!.cards = 1;
+    update.round = 1;
+
+    await isarDB.writeTxn(() async {      
+      await isarDB.scoreboardModels.put(update);  
+    });
+
+    updateScoreBoard(update.scoreboardID);
   }
 
-  Future closeInstance() async {
-    final isarDB = await AppRepository().openDB();
-    isarDB.close();
-}
+  // @action
+  // Future<List<ScoreboardModel>> listAllSavedGames() async {
+  //   final isarDB = await AppRepository().openDB();
+  //   final list = await isarDB.scoreboardModels.where().findAll();
+
+  //   return list;
+  // }
+
+  // Future closeInstance() async {
+  //   final isarDB = await AppRepository().openDB();
+  //   isarDB.close();
+  // }
 }
