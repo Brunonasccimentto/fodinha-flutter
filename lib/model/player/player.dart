@@ -14,13 +14,13 @@ class PlayerModel {
   PlayerModel({required this.name});
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['color'] = this.color;
-    data['count'] = this.count;
-    data['points'] = this.points;
-    data['dealer'] = this.dealer;
-    data['photo'] = this.picture;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['color'] = color;
+    data['count'] = count;
+    data['points'] = points;
+    data['dealer'] = dealer;
+    data['photo'] = picture;
     return data;
   }
 }

@@ -25,8 +25,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
             if(snapshot.hasData){
              return ListView.builder(
               itemCount: snapshot.data!.length,
-              itemBuilder: (BuildContext context, int index) {
-                final data = snapshot.data![index].players.map((e) => e).toList();
+              itemBuilder: (BuildContext context, int index) {            
                 return ListTile(
                   title: Text("Jogo ${snapshot.data![index].scoreboardID}"),
                   onTap: () {

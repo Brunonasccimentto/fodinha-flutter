@@ -4,6 +4,7 @@ import 'package:random_avatar/random_avatar.dart';
 
 part "playerscreen_controller.g.dart";
 
+// ignore: library_private_types_in_public_api
 class PlayerScreenController = _PlayerScreenControllerBase with _$PlayerScreenController;
   
 abstract class _PlayerScreenControllerBase with Store {

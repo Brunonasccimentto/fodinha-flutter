@@ -26,7 +26,7 @@ class MainList extends StatelessWidget {
   Widget build(BuildContext context) {
     const avatarData = avatar;
     final store = Provider.of<PlayerViewModel>(context);
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     final inputController = TextEditingController();
     
     return Column(
@@ -113,7 +113,7 @@ class MainList extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
                               content: Form(
-                                key: _formKey,
+                                key: formKey,
                                 child: CustomField(
                                   labelText: "Nome do jogador",
                                   autoFocus: true,
@@ -134,7 +134,7 @@ class MainList extends StatelessWidget {
                                     child: const Text("Cancelar")),
                                 TextButton(
                                     onPressed: () {
-                                      if(_formKey.currentState!.validate()){
+                                      if(formKey.currentState!.validate()){
                                         Provider.of<PlayerViewModel>(context, listen: false).createPlayer(PlayerModel(name: inputController.text));
                                         inputController.text = "";
                                         Navigator.pop(context, 3);

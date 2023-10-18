@@ -48,9 +48,7 @@ class AvatarPlayerCircle extends StatelessWidget {
                   data: data.runtimeType == PlayerModel ? data : secondData,
                   width: width,
                   height: height,
-                  radius: 90,) : CircleAvatar(
-                    
-                  )
+                  radius: 90,) : const CircleAvatar()
           ),
         ),
       ),

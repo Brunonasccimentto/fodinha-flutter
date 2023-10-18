@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 
 part "player_view_model.g.dart";
 
+// ignore: library_private_types_in_public_api
 class PlayerViewModel = _PlayerViewModelBase with _$PlayerViewModel;
   
 abstract class _PlayerViewModelBase with Store {
@@ -33,9 +34,7 @@ abstract class _PlayerViewModelBase with Store {
     await isarDB.writeTxn(() async {
       await isarDB.playerModels.clear(); 
     });
-
-    print("clear");
-  
+    
     await getPlayerList();
   }
 
