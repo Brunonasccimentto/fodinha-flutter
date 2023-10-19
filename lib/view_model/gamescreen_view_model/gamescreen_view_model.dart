@@ -32,31 +32,6 @@ abstract class GamescreenViewModelBase with Store {
     _playersLostRound = [..._playersLostRound, value];
   }
 
-  @action
-  Future<void> saveLinkedPlayers(ScoreboardModel scoreboard, List<PlayerModel> players) async {
-    final isarDB = await AppRepository().openDB();
-
-    scoreboard.players.addAll(players);
-    _scoreboard = scoreboard;
-    
-     await isarDB.writeTxn(() async {
-      await scoreboard.players.save();
-    });
-
-    await updateScoreBoard(scoreboard.scoreboardID);
-  }
-
-   @action
-  Future<void> updateScoreBoard(int id) async {
-    final isarDB = await AppRepository().openDB();
-    final update = await isarDB.scoreboardModels.get(id);
-
-    _scoreboard = update!;
-    
-     await isarDB.writeTxn(() async {
-      await isarDB.scoreboardModels.put(update);
-    });
-  }
 
   int sumAllPlayerCountValues(List<PlayerModel> players) {
     int sum = players.fold(0, (counter, obj) {
@@ -69,6 +44,34 @@ abstract class GamescreenViewModelBase with Store {
 
   void _resetPlayersLostRound(){
     _playersLostRound = [];
+  }
+
+  @action
+  Future<void> newGame(ScoreboardModel scoreboard, List<PlayerModel> players) async {
+    final isarDB = await AppRepository().openDB();
+
+    await isarDB.writeTxn(() async { 
+      await isarDB.scoreboardModels.clear();           // medida provisória para não ocupar memoria / possivel update - AllgamesSaved //
+      await isarDB.scoreboardModels.put(scoreboard);  
+    });
+
+    _scoreboard = scoreboard;
+  
+    await saveLinkedPlayers(scoreboard, players);
+  }
+
+  @action
+  Future<void> saveLinkedPlayers(ScoreboardModel scoreboard, List<PlayerModel> players) async {
+    final isarDB = await AppRepository().openDB();
+
+    scoreboard.players.addAll(players);
+    _scoreboard = scoreboard;
+    
+     await isarDB.writeTxn(() async {
+      await scoreboard.players.save();
+    });
+
+    await updateScoreBoard(scoreboard.scoreboardID);
   }
 
   @action
@@ -87,6 +90,18 @@ abstract class GamescreenViewModelBase with Store {
       winner = 'Parabéns $winnerName você ganhou o jogo';
     }
   }  
+
+   @action
+  Future<void> updateScoreBoard(int id) async {
+    final isarDB = await AppRepository().openDB();
+    final update = await isarDB.scoreboardModels.get(id);
+
+    _scoreboard = update!;
+    
+     await isarDB.writeTxn(() async {
+      await isarDB.scoreboardModels.put(update);
+    });
+  }
  
   @action
   Future<void> updateRound(int id) async {
@@ -114,21 +129,7 @@ abstract class GamescreenViewModelBase with Store {
     await updateScoreBoard(update.scoreboardID);
   }
 
-  @action
-  Future<void> newGame(ScoreboardModel scoreboard, List<PlayerModel> players) async {
-    final isarDB = await AppRepository().openDB();
-
-    await isarDB.writeTxn(() async { 
-      await isarDB.scoreboardModels.clear();           // medida provisória para não ocupar memoria / possivel update - AllgamesSaved //
-      await isarDB.scoreboardModels.put(scoreboard);  
-    });
-
-    _scoreboard = scoreboard;
-  
-    await saveLinkedPlayers(scoreboard, players);
-  }
-
-  @action
+   @action
   Future<void> resetStats() async {
     final isarDB = await AppRepository().openDB();
 

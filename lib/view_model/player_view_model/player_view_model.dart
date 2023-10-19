@@ -195,11 +195,4 @@ abstract class _PlayerViewModelBase with Store {
     await getPlayerList();
   }
 
-  @action
-  Future<List<int>> getListOfPlayersIds() async{
-    final isarDB = await AppRepository().openDB();
-    final List<int> listPlayersIds = await isarDB.playerModels.where().playerIDProperty().findAll();
-
-    return listPlayersIds;
-  }
 }

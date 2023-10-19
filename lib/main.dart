@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fodinha_flutter/view_model/gamescreen_view_model.dart';
-import 'package:fodinha_flutter/view_model/player_view_model.dart';
+import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
+import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
 import 'package:fodinha_flutter/views/gamescreen/gamescreen.dart';
 import 'package:fodinha_flutter/views/gamescreen/gamescreen_endRound.dart';
 import 'package:fodinha_flutter/feature/loadingscreen/loadingscreen.dart';

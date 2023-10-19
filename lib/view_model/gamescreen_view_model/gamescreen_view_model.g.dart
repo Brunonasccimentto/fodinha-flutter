@@ -72,6 +72,14 @@ mixin _$GamescreenViewModel on GamescreenViewModelBase, Store {
     });
   }
 
+  late final _$newGameAsyncAction =
+      AsyncAction('GamescreenViewModelBase.newGame', context: context);
+
+  @override
+  Future<void> newGame(ScoreboardModel scoreboard, List<PlayerModel> players) {
+    return _$newGameAsyncAction.run(() => super.newGame(scoreboard, players));
+  }
+
   late final _$saveLinkedPlayersAsyncAction = AsyncAction(
       'GamescreenViewModelBase.saveLinkedPlayers',
       context: context);
@@ -97,14 +105,6 @@ mixin _$GamescreenViewModel on GamescreenViewModelBase, Store {
   @override
   Future<void> updateRound(int id) {
     return _$updateRoundAsyncAction.run(() => super.updateRound(id));
-  }
-
-  late final _$newGameAsyncAction =
-      AsyncAction('GamescreenViewModelBase.newGame', context: context);
-
-  @override
-  Future<void> newGame(ScoreboardModel scoreboard, List<PlayerModel> players) {
-    return _$newGameAsyncAction.run(() => super.newGame(scoreboard, players));
   }
 
   late final _$resetStatsAsyncAction =

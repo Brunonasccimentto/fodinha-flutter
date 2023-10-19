@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fodinha_flutter/model/scoreboard/scoreboard.dart';
-import 'package:fodinha_flutter/view_model/gamescreen_view_model.dart';
+import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
 import 'package:provider/provider.dart';
 
 class LoadingScreen extends StatefulWidget {

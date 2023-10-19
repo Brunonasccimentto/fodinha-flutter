@@ -118,15 +118,6 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
         .run(() => super.updatePlayersLostRound(players));
   }
 
-  late final _$getListOfPlayersIdsAsyncAction =
-      AsyncAction('_PlayerViewModelBase.getListOfPlayersIds', context: context);
-
-  @override
-  Future<List<int>> getListOfPlayersIds() {
-    return _$getListOfPlayersIdsAsyncAction
-        .run(() => super.getListOfPlayersIds());
-  }
-
   @override
   String toString() {
     return '''

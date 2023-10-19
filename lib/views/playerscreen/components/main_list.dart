@@ -6,16 +6,16 @@ import 'package:fodinha_flutter/components/atoms/avatar_player_circle.dart';
 import 'package:fodinha_flutter/components/atoms/custom_field.dart';
 import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/components/molecules/player.dart';
-import 'package:fodinha_flutter/components/organism/dialogs.dart';
+import './dialogs.dart';
 import 'package:fodinha_flutter/model/scoreboard/scoreboard.dart';
 import 'package:fodinha_flutter/shared/constants/avatar.dart';
 import 'package:fodinha_flutter/model/player/player.dart';
-import 'package:fodinha_flutter/view_model/gamescreen_view_model.dart';
+import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/views/playerscreen/controller/playerscreen_controller.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 import 'package:provider/provider.dart';
-import '../../../view_model/player_view_model.dart';
+import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
 
 class MainList extends StatelessWidget {
   final PlayerScreenController controller;
