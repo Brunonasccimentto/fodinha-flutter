@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
@@ -34,37 +35,32 @@ class _StartScreenState extends State<StartScreen> {
               Image.asset("assets/adaptive-icon.png"),
               Column(
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 10,
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) 
-                    ),
+                  ElevatedTextButtonDefault(              
                     onPressed: () async {                   
                       await store.newGame();
                       Navigator.pushNamed(context, "/PlayerScreen");
                     }, 
-                    child: const Text("Novo jogo")),
-
-                  ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 10,
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) 
+                    text: 'Novo jogo',
+                    size: const Size(150, 30),
                   ),
-                  onPressed: () async {                    
-                    if(store.playerList.isNotEmpty && store.playerList.length >= 2){
-                      Navigator.pushNamed(context, "/GameScreen");
-                      return;
-                    }
-                    
-                    MotionToast.error(
-                      title:  const Text("Erro"),                    
-                      description:  const Text("Não existe nenhum jogo salvo"),
-                      position: MotionToastPosition.top,
-                    ).show(context);
-                  }, 
-                  child: const Text("Carregar jogo")),
+
+                  ElevatedTextButtonDefault(               
+                    onPressed: () async {                    
+                      if(store.playerList.isNotEmpty && store.playerList.length >= 2){
+                        Navigator.pushNamed(context, "/GameScreen");
+                        return;
+                      }
+                      
+                      MotionToast.error(
+                        title:  const Text("Erro"),                    
+                        description:  const Text("Não existe nenhum jogo salvo"),
+                        position: MotionToastPosition.top,
+                      ).show(context);
+                    }, 
+                    text: "Carregar jogo",
+                    size: const Size(150, 30),
+                  ),
+                  
 
                 ],
               )
