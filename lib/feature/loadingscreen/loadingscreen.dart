@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fodinha_flutter/model/scoreboard/scoreboard.dart';
 import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -19,36 +18,37 @@ class _LoadingScreenState extends State<LoadingScreen> {
     final GamescreenViewModel store = Provider.of<GamescreenViewModel>(context);
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 125, 139, 218),
-        body: FutureBuilder(
-          // future: store.listAllSavedGames(),
-          builder: (BuildContext context, AsyncSnapshot<List<ScoreboardModel>> snapshot) {        
-            if(snapshot.hasData){
-             return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (BuildContext context, int index) {            
-                return ListTile(
-                  title: Text("Jogo ${snapshot.data![index].scoreboardID}"),
-                  onTap: () {
-                    store.updateScoreBoard(snapshot.data![index].scoreboardID);
-                    Navigator.pushReplacementNamed(context, "/GameScreen");
-                  } ,
-                  // leading: AvatarPlayerCircle(
-                  //   data: data[index],
-                  //   width: 20,
-                  //   height: 20,
-                  //   margin: EdgeInsets.zero,)
+        body: Container() 
+        // FutureBuilder(
+        //   future: store.listAllSavedGames(),
+        //   builder: (BuildContext context, AsyncSnapshot<List<ScoreboardModel>> snapshot) {        
+        //     if(snapshot.hasData){
+        //      return ListView.builder(
+        //       itemCount: snapshot.data!.length,
+        //       itemBuilder: (BuildContext context, int index) {            
+        //         return ListTile(
+        //           title: Text("Jogo ${snapshot.data![index].scoreboardID}"),
+        //           onTap: () {
+        //             store.updateScoreBoard(snapshot.data![index].scoreboardID);
+        //             Navigator.pushReplacementNamed(context, "/GameScreen");
+        //           } ,
+        //           // leading: AvatarPlayerCircle(
+        //           //   data: data[index],
+        //           //   width: 20,
+        //           //   height: 20,
+        //           //   margin: EdgeInsets.zero,)
                   
-                );
-              });
-            }
-            if(snapshot.hasError){
-              return Container();
-            }
+        //         );
+        //       });
+        //     }
+        //     if(snapshot.hasError){
+        //       return Container();
+        //     }
             
-            return const Center(
-              child: CircularProgressIndicator());
-          },
-        ),
+        //     return const Center(
+        //       child: CircularProgressIndicator());
+        //   },
+        // ),
     );
   }
 }
