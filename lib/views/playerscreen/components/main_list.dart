@@ -29,174 +29,179 @@ class MainList extends StatelessWidget {
     final formKey = GlobalKey<FormState>();
     final inputController = TextEditingController();
     
-    return Column(
-      children: [
-        Observer(
-            builder: (BuildContext context) { 
-              return store.playerList.isEmpty
-              ? Container(
-                height: MediaQuery.of(context).size.height / 1.2,
-                alignment: Alignment.center,
-                child: const Text("Nenhum jogador",
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontWeight: FontWeight.bold))
-                )
-              : GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: store.playerList.length,
-                  itemBuilder: (context, index) {
-                    return Draggable(
-                      onDragStarted: () {                                             
-                        controller.updateSize();   
-                      },
-                      onDraggableCanceled: (velocity, offset){
-                        controller.updateSize();                       
-                      },
-                                      
-                      data: store.playerList[index].playerID,
-                      childWhenDragging: AvatarPlayerCircle(
-                        data: store.playerList[index],
-                        opacity: 0.5, 
-                        margin: const EdgeInsets.only(top: 34),
-                      ),               
-                      feedback: AvatarPlayerCircle(
-                        data: store.playerList[index],
-                        margin: const EdgeInsets.only(top: 34) 
+    return SafeArea(
+      child: Center(
+        child: Column(
+          children: [
+            Observer(
+                builder: (BuildContext context) { 
+                  return store.playerList.isEmpty
+                  ? Expanded(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 1.2,
+                      alignment: Alignment.center,
+                      child: const Text("Nenhum jogador",
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontWeight: FontWeight.bold))
                       ),
-                      child: Player(
-                        data: store.playerList[index],
-                        onLongPress: ()=> store.setDealer(store.playerList[index].playerID),
-                        onTap: () {
-                          if(store.playerList[index].picture != ""){
-                            controller.setPicture(store.playerList[index].picture);
-                          }   
-                          
+                  )
+                  : GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: store.playerList.length,
+                      itemBuilder: (context, index) {
+                        return Draggable(
+                          onDragStarted: () {                                             
+                            controller.updateSize();   
+                          },
+                          onDraggableCanceled: (velocity, offset){
+                            controller.updateSize();                       
+                          },
+                                          
+                          data: store.playerList[index].playerID,
+                          childWhenDragging: AvatarPlayerCircle(
+                            data: store.playerList[index],
+                            opacity: 0.5, 
+                            margin: const EdgeInsets.only(top: 34),
+                          ),               
+                          feedback: AvatarPlayerCircle(
+                            data: store.playerList[index],
+                            margin: const EdgeInsets.only(top: 34) 
+                          ),
+                          child: Player(
+                            data: store.playerList[index],
+                            onLongPress: ()=> store.setDealer(store.playerList[index].playerID),
+                            onTap: () {
+                              if(store.playerList[index].picture != ""){
+                                controller.setPicture(store.playerList[index].picture);
+                              }   
+                              
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Dialogs(
+                                    data: store.playerList[index], 
+                                    avatarData: avatarData, 
+                                    controller: controller,
+                                    onSave: ()=> store.updatePicture(store.playerList[index].playerID, controller.svg));
+                                  },
+                              );
+                            }, showCounter: false,
+                            child: AvatarPlayerCircle(data: store.playerList[index]))
+                        );
+                      },
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3),
+                    );
+                },
+             
+            ),
+        
+            Observer(
+              builder: (context){
+                return 
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  margin: const EdgeInsets.only(bottom: 60),
+                  child: controller.size == 0 ?
+                    Row(                               
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,               
+                    children: [
+                      ElevatedTextButtonDefault(                
+                        text: "Adicionar jogador", 
+                        icon: const Icon(Icons.add),                  
+                        onPressed: (){
+                          // inputController.text = "";
                           showDialog(
                             context: context,
-                            builder: (BuildContext context) {
-                              return Dialogs(
-                                data: store.playerList[index], 
-                                avatarData: avatarData, 
-                                controller: controller,
-                                onSave: ()=> store.updatePicture(store.playerList[index].playerID, controller.svg));
-                              },
-                          );
-                        }, showCounter: false,
-                        child: AvatarPlayerCircle(data: store.playerList[index]))
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3),
-                );
-            },
-         
-        ),
-    
-        Observer(
-          builder: (context){
-            return 
-            Expanded(
-            child: Container(
-              alignment: Alignment.bottomCenter,
-              margin: const EdgeInsets.only(bottom: 60),
-              child: controller.size == 0 ?
-                Row(                               
-                mainAxisAlignment: MainAxisAlignment.spaceAround,               
-                children: [
-                  ElevatedTextButtonDefault(                
-                    text: "Adicionar jogador", 
-                    icon: const Icon(Icons.add),                  
-                    onPressed: (){
-                      // inputController.text = "";
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                              content: Form(
-                                key: formKey,
-                                child: CustomField(
-                                  labelText: "Nome do jogador",
-                                  autoFocus: true,
-                                  controller: inputController,                                
-                                  validator: (String? value) {                                   
-                                    if (value == null || value.isEmpty) {
-                                      return "Campo não preenchido";
-                                    }
-                                    return null;
-                                  }),
-                              ),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      inputController.text = "";
-                                    },
-                                    child: const Text("Cancelar")),
-                                TextButton(
-                                    onPressed: () {
-                                      if(formKey.currentState!.validate()){
-                                        Provider.of<PlayerViewModel>(context, listen: false).createPlayer(PlayerModel(name: inputController.text));
-                                        inputController.text = "";
-                                        Navigator.pop(context, 3);
-                                      }                                     
-                                    },
-                                    child: const Text("Criar"))
-                              ],
-                            )
-                        );
-                        
-                    }),
-                  ElevatedTextButtonDefault(                  
-                    text: "Começar jogo",
-                    icon: const Icon(Icons.sports_esports_outlined),
-                    onPressed: () async {
-                      if(store.playerList.length < 2){
-                        MotionToast.error(
-                          title:  const Text("Erro"),               
-                          description:  const Text("Deve ter no mínimo dois jogadores para começar"),
-                          position: MotionToastPosition.top,
-                        ).show(context);
-                        return;
-                      }
-                      store.resetStats();
-                      await Provider.of<GamescreenViewModel>(context, listen: false).newGame(ScoreboardModel(), store.playerList);
-                      // ignore: use_build_context_synchronously
-                      Navigator.pushReplacementNamed(context, "/GameScreen");
-                    }
-                  )
-                ],
-                ) :  DragTarget<int>(
-                      onMove: (details){
-                        HapticFeedback.vibrate();                           
-                      },
-                      builder: (BuildContext context,
-                      List<int?> accepted,
-                      List<dynamic> rejected) {
-                        return Observer(
-                          builder: (context) {
-                            return AnimatedSize(
-                              curve: Curves.easeInOut,
-                              duration: const Duration(seconds: 1),
-                              child: ShakeWidget(                       
-                                autoPlay: true,
-                                shakeConstant: ShakeRotateConstant1(),
-                                child: Icon(Icons.delete_forever_rounded,
-                                color:const Color.fromARGB(255, 255, 27, 11),
-                                size: controller.size,),
-                              ),
+                            builder: (BuildContext context) => AlertDialog(
+                                  content: Form(
+                                    key: formKey,
+                                    child: CustomField(
+                                      labelText: "Nome do jogador",
+                                      autoFocus: true,
+                                      controller: inputController,                                
+                                      validator: (String? value) {                                   
+                                        if (value == null || value.isEmpty) {
+                                          return "Campo não preenchido";
+                                        }
+                                        return null;
+                                      }),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          inputController.text = "";
+                                        },
+                                        child: const Text("Cancelar")),
+                                    TextButton(
+                                        onPressed: () {
+                                          if(formKey.currentState!.validate()){
+                                            Provider.of<PlayerViewModel>(context, listen: false).createPlayer(PlayerModel(name: inputController.text));
+                                            inputController.text = "";
+                                            Navigator.pop(context, 3);
+                                          }                                     
+                                        },
+                                        child: const Text("Criar"))
+                                  ],
+                                )
                             );
+                            
+                        }),
+                      ElevatedTextButtonDefault(                  
+                        text: "Começar jogo",
+                        icon: const Icon(Icons.sports_esports_outlined),
+                        onPressed: () async {
+                          if(store.playerList.length < 2){
+                            MotionToast.error(
+                              title:  const Text("Erro"),               
+                              description:  const Text("Deve ter no mínimo dois jogadores para começar"),
+                              position: MotionToastPosition.top,
+                            ).show(context);
+                            return;
                           }
-                        );
-                      },
-                      onAccept: (int playerID)  {                       
-                        controller.updateSize();
-                        store.deletePlayer(playerID);
-                      },
-                    ),
-            )); 
-            }
-          ),
-      ],
+                          store.resetStats();
+                          await Provider.of<GamescreenViewModel>(context, listen: false).newGame(ScoreboardModel(), store.playerList);
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacementNamed(context, "/GameScreen");
+                        }
+                      )
+                    ],
+                    ) :  DragTarget<int>(
+                          onMove: (details){
+                            HapticFeedback.vibrate();                           
+                          },
+                          builder: (BuildContext context,
+                          List<int?> accepted,
+                          List<dynamic> rejected) {
+                            return Observer(
+                              builder: (context) {
+                                return AnimatedSize(
+                                  curve: Curves.easeInOut,
+                                  duration: const Duration(seconds: 1),
+                                  child: ShakeWidget(                       
+                                    autoPlay: true,
+                                    shakeConstant: ShakeRotateConstant1(),
+                                    child: Icon(Icons.delete_forever_rounded,
+                                    color:const Color.fromARGB(255, 255, 27, 11),
+                                    size: controller.size,),
+                                  ),
+                                );
+                              }
+                            );
+                          },
+                          onAccept: (int playerID)  {                       
+                            controller.updateSize();
+                            store.deletePlayer(playerID);
+                          },
+                        ),
+                ); 
+                }
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

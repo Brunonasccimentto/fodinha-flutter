@@ -136,6 +136,8 @@ abstract class GamescreenViewModelBase with Store {
     final update = await isarDB.scoreboardModels.where().findFirst();
     update!.cards = 1;
     update.round = 1;
+    _playersLostRound = [];
+    winner = '';
 
     await isarDB.writeTxn(() async {      
       await isarDB.scoreboardModels.put(update);  
