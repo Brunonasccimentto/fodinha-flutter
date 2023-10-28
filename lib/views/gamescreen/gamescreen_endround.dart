@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fodinha_flutter/components/atoms/app_screen.dart';
 import 'package:fodinha_flutter/components/atoms/avatar_player_circle.dart';
 import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/components/molecules/player.dart';
 import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
+import 'package:fodinha_flutter/views/gamescreen/components/eliminated_stamp.dart';
 import 'package:fodinha_flutter/views/gamescreen/components/winner_dialog.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
@@ -61,8 +61,7 @@ class GameScreenEndRound extends StatelessWidget {
               Observer(
                 builder: (BuildContext context) { 
                   return GridView.builder(                
-                  itemCount: store.playerList.length,
-                  
+                  itemCount: store.playerList.length,                
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 1.5), 
@@ -86,22 +85,13 @@ class GameScreenEndRound extends StatelessWidget {
                           },
                         ),
 
-                        Positioned.fill(                                                        
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: store.playerList[index].points == 5 ? 
-                            SvgPicture.asset("assets/selo-eliminado.svg",
-                            // ignore: deprecated_member_use
-                            color: Colors.red,
-                            width: 100,
-                            height: 150) 
-                            : Container(),
-                          ),
-                        ),
+                        EliminatedStamp(
+                          points: store.playerList[index].points
+                        )
                       ],
                     );
                   });
-                  },
+                },
               ),
               Positioned.fill(                      
                 bottom: 40,

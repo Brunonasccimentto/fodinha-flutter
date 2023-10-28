@@ -6,14 +6,14 @@ import 'package:fodinha_flutter/components/atoms/circle_color.dart';
 import 'package:fodinha_flutter/model/player/player.dart';
 import 'package:fodinha_flutter/views/playerscreen/controller/playerscreen_controller.dart';
 
-class Dialogs extends StatelessWidget {
+class PlayerAvatarDialog extends StatelessWidget {
   final PlayerModel data;
   final List<String> avatarData;
   final PlayerScreenController controller;
   final VoidCallback? onSave;
   final VoidCallback? onCancel;
 
-  const Dialogs(
+  const PlayerAvatarDialog(
     {required this.data,
     required this.avatarData,
     required this.controller,
