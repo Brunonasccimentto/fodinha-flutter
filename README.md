@@ -1,7 +1,7 @@
 # fodinha_flutter
 
 ### App para gerenciar um jogo de baralho chamado Fodinha.
-A criação desse aplicativo foi muito proveitosa para praticar o uso do gerenciador de estados globais, MobX, e também compreender melhor o conceito arquitetura de software MVVM.
+A criação desse aplicativo foi muito proveitosa para praticar o uso do gerenciador de estados globais com MobX, persistencia de dados com banco NoSQL (isarDB) e também compreender melhor o conceito arquitetura de software MVVM.
 
 ### Descrição do Projeto
 Um aplicativo para gerenciar uma partida de Fodinha pelo celular. 
