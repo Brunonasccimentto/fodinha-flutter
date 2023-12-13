@@ -24,7 +24,9 @@ class CircleColor extends StatelessWidget {
             data.name.substring(0, 2).toUpperCase(),
             style: TextStyle(
               decoration: TextDecoration.none,
-              color: Colors.white, fontSize: labelSize ?? 22),
+              color: Theme.of(context).colorScheme.secondary, 
+              fontSize: labelSize ?? 22
+            ),
           ),
         ),
       );

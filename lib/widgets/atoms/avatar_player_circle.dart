@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fodinha_flutter/components/atoms/circle_color.dart';
+import 'package:fodinha_flutter/widgets/atoms/circle_color.dart';
 import 'package:fodinha_flutter/model/player/player.dart';
 
 class AvatarPlayerCircle extends StatelessWidget {
@@ -21,6 +21,8 @@ class AvatarPlayerCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
   
     return Opacity(
       opacity: opacity ?? 1,

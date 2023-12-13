@@ -15,7 +15,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
  
   @override
   Widget build(BuildContext context) {
-    final GamescreenViewModel store = Provider.of<GamescreenViewModel>(context);
+    // final GamescreenViewModel store = Provider.of<GamescreenViewModel>(context);
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 125, 139, 218),
         body: Container() 

@@ -15,7 +15,7 @@ class EliminatedStamp extends StatelessWidget {
             ? SvgPicture.asset(
                 "assets/selo-eliminado.svg",
                 // ignore: deprecated_member_use
-                color: Colors.red,
+                color: Theme.of(context).colorScheme.error,
                 width: 100,
                 height: 100,
               )

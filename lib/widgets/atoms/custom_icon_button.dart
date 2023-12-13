@@ -15,7 +15,7 @@ class CustomIconButton extends StatelessWidget {
       icon: Icon(
         icon,
         size: 32,
-        color: Colors.indigo,
+        color: Theme.of(context).colorScheme.primary
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
 import 'package:fodinha_flutter/views/gamescreen/gamescreen.dart';
@@ -10,13 +11,14 @@ import 'package:provider/provider.dart';
 
 
 void main() {
-  runApp(const AppWidget());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(const AppWidget()));
 }
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -28,12 +30,15 @@ class AppWidget extends StatelessWidget {
         
       ],
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
+          debugShowCheckedModeBanner: false, 
           theme: ThemeData(
-              colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.indigo),
-              iconTheme: const IconThemeData(color: Colors.white70),
-              textTheme:
-                  const TextTheme(displayLarge: TextStyle(color: Colors.white))),
+            colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: Colors.indigo,
+              accentColor: Colors.white,
+              backgroundColor: const Color.fromARGB(255, 125, 139, 218),
+              errorColor: const Color.fromARGB(255, 255, 27, 11)
+            )
+          ),         
           initialRoute: "/",
           routes: {
             "/": (BuildContext context) => const StartScreen(),

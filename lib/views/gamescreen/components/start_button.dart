@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
+import 'package:fodinha_flutter/widgets/atoms/elevated_text_buttom.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 

@@ -22,10 +22,11 @@ class CustomField extends StatelessWidget {
       onChanged: onChanged,
       controller: controller,
       validator: validator,
-      decoration: InputDecoration(
-        border: const UnderlineInputBorder(),
-        labelText: labelText,
+      decoration: InputDecoration(            
+        labelText: labelText,    
+         
       ),
+      
     );
   }
 }

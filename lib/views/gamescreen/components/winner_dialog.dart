@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
-import 'package:lottie/lottie.dart';
+import 'package:fodinha_flutter/core/app_assets.dart';
+import 'package:fodinha_flutter/widgets/atoms/elevated_text_buttom.dart';
 
 class WinnerDialog extends StatelessWidget {
   final String winner;
@@ -19,13 +19,9 @@ class WinnerDialog extends StatelessWidget {
         ? Stack(
             children: [
               
-               Positioned(
+              Positioned(
                 bottom: 0,
-                child: Lottie.asset(
-                  'assets/fireworks.json',
-                  height: 500,                
-                  repeat: true,
-                ),
+                child: AppAssets().fireworks
               ),
               Positioned(
                 
@@ -36,8 +32,8 @@ class WinnerDialog extends StatelessWidget {
                     child: Container(                
                       padding: const EdgeInsets.all(16.0),
                       width: MediaQuery.of(context).size.width - 60,
-                      height: MediaQuery.of(context).size.height / 2,
-                      color: const Color.fromARGB(255, 125, 139, 218).withOpacity(0.7),
+                      height: MediaQuery.of(context).size.height / 1.6,
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -51,11 +47,9 @@ class WinnerDialog extends StatelessWidget {
                               color: Colors.white,                        
                             ),
                           ),
-                          Lottie.asset(
-                            'assets/trophy.json',
-                            height: 250,                        
-                            repeat: true,
-                          ),
+
+                          AppAssets().trophy,
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -82,11 +76,7 @@ class WinnerDialog extends StatelessWidget {
               ),
               Positioned(
                 top: 0,
-                child: Lottie.asset(
-                  'assets/fireworks.json',
-                  height: 500,                
-                  repeat: true,
-                ),
+                child: AppAssets().fireworks
               ),
              
             ],

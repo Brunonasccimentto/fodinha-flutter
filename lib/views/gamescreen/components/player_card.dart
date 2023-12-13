@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fodinha_flutter/components/atoms/avatar_player_circle.dart';
-import 'package:fodinha_flutter/components/atoms/custom_icon_button.dart';
-import 'package:fodinha_flutter/components/molecules/player.dart';
+import 'package:fodinha_flutter/widgets/atoms/avatar_player_circle.dart';
+import 'package:fodinha_flutter/widgets/atoms/custom_icon_button.dart';
+import 'package:fodinha_flutter/widgets/molecules/player.dart';
 import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
 import 'package:fodinha_flutter/views/gamescreen/components/eliminated_stamp.dart';
@@ -34,9 +34,9 @@ class PlayerCard extends StatelessWidget {
                 children: [
                   Text(
                     "${store.playerList[index].count}",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
-                      color: Colors.white70,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                   OverflowBar(
@@ -52,8 +52,7 @@ class PlayerCard extends StatelessWidget {
                       ),
                       CustomIconButton(
                         icon: Icons.add_circle,
-                        onPressed: () {
-                          print(Provider.of<GamescreenViewModel>(context, listen: false).scoreboard.cards);
+                        onPressed: () {                         
                           if (store.playerList[index].count < Provider.of<GamescreenViewModel>(context, listen: false).scoreboard.cards) {
                             store.countHowManyRoundsPlayerDo(store.playerList[index].count + 1, store.playerList[index].playerID);
                             return;

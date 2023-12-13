@@ -19,10 +19,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
   @override
   Widget build(BuildContext context) {
     Future <List<PlayerModel>> players = Provider.of<PlayerViewModel>(context).getPlayerList();
-
-    return AppScreen(
-      widgets: [
-         FutureBuilder(
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: FutureBuilder(
           future: players,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {        
             if(snapshot.hasData){

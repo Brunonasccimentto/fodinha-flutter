@@ -10,7 +10,7 @@ class AppScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor ?? const Color.fromARGB(255, 125, 139, 218),
+      backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Center(
           child: Column(

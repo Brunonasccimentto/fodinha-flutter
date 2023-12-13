@@ -2,18 +2,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fodinha_flutter/components/atoms/circle_color.dart';
+import 'package:fodinha_flutter/widgets/atoms/circle_color.dart';
 import 'package:fodinha_flutter/model/player/player.dart';
 import 'package:fodinha_flutter/views/playerscreen/controller/playerscreen_controller.dart';
 
-class PlayerAvatarDialog extends StatelessWidget {
+class AvatarDialogs extends StatelessWidget {
   final PlayerModel data;
   final List<String> avatarData;
   final PlayerScreenController controller;
   final VoidCallback? onSave;
   final VoidCallback? onCancel;
 
-  const PlayerAvatarDialog(
+  const AvatarDialogs(
     {required this.data,
     required this.avatarData,
     required this.controller,
@@ -39,15 +39,15 @@ class PlayerAvatarDialog extends StatelessWidget {
                       children: [
                         // tem como melhorar o avatar_player
                         Container(
-                          child: controller.picture.contains(".svg")
+                          child: controller.svg.contains(".svg")
                               ? SvgPicture.asset(
-                                  controller.picture,
+                                  controller.svg,
                                   width: 150,
                                   height: 150,
                                 )
-                              : controller.picture.contains("<")
+                              : controller.svg.contains("xmlns")
                               ? SvgPicture.string(
-                                  controller.picture,
+                                  controller.svg,
                                   width: 150,
                                   height: 150,
                                 )
@@ -63,10 +63,11 @@ class PlayerAvatarDialog extends StatelessWidget {
                 );
             },
           ),
-          const Text("Selecione o seu avatar",
+          Text("Selecione o seu avatar",
             style: TextStyle(
               fontSize: 22,
-              fontWeight: FontWeight.w800
+              fontWeight: FontWeight.w800,
+              color: Theme.of(context).colorScheme.primary
             )),
           Expanded(
               child: Container(
@@ -86,7 +87,7 @@ class PlayerAvatarDialog extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 if (avatar == "assets/random-avatar.svg") {
-                                  controller.createRandomNewAvatar();
+                                  controller.createRandomNewAvatar();                                 
                                   return;
                                 }
 
@@ -99,7 +100,7 @@ class PlayerAvatarDialog extends StatelessWidget {
                                   controller.getImageFromGallery();
                                   return;
                                 }
-
+                                
                                 controller.setPicture(avatar);
                               },
                               child: SvgPicture.asset(
