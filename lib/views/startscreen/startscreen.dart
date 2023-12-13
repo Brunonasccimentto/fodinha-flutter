@@ -1,8 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:fodinha_flutter/components/atoms/app_screen.dart';
-import 'package:fodinha_flutter/components/atoms/elevated_text_buttom.dart';
+import 'package:fodinha_flutter/core/app_assets.dart';
+import 'package:fodinha_flutter/widgets/atoms/app_screen.dart';
+import 'package:fodinha_flutter/widgets/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
@@ -31,7 +32,7 @@ class _StartScreenState extends State<StartScreen> {
       backgroundColor: Theme.of(context).colorScheme.primary,
       aligment: MainAxisAlignment.center,
       widgets: [
-        Image.asset("assets/adaptive-icon.png"),
+        AppAssets().adaptiveIcon,
 
         Column(
           children: [
@@ -42,6 +43,7 @@ class _StartScreenState extends State<StartScreen> {
               }, 
               text: 'Novo jogo',
               size: const Size(150, 30),
+              fontSize: 14,
             ),
 
             ElevatedTextButtonDefault(               
@@ -59,6 +61,7 @@ class _StartScreenState extends State<StartScreen> {
               }, 
               text: "Carregar jogo",
               size: const Size(150, 30),
+              fontSize: 14,
             ),
           ],
         )
