@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fodinha_flutter/core/app_icons.dart';
 
 class Header extends StatelessWidget {
   final int round;
@@ -13,19 +14,19 @@ class Header extends StatelessWidget {
       children: [
         Text(
           "Round $round",
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 32,
-            color: Colors.white70,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.play_for_work_rounded),
+            AppIcons().cards,
             Text(
               "Cards $cards",
-              style: const TextStyle(
-                color: Colors.white70,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
           ],

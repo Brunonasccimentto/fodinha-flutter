@@ -19,7 +19,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   Widget build(BuildContext context) {
     Future <List<PlayerModel>> players = Provider.of<PlayerViewModel>(context).getPlayerList();
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 125, 139, 218),
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: FutureBuilder(
           future: players,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {        
