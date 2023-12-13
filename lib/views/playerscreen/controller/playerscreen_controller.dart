@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:random_avatar/random_avatar.dart';
@@ -33,11 +35,23 @@ abstract class _PlayerScreenControllerBase with Store {
   }
 
   @action
-  createRandomNewAvatar(){
+  void createRandomNewAvatar(){
     picture = RandomAvatarString(
-    DateTime.now().toIso8601String(),
+    gerenateRandomStringAvatar(),
     trBackground: false,);
   }
+
+  String gerenateRandomStringAvatar() {
+  Random random = Random();
+  String avatarSequence = '';
+
+  for (int i = 0; i < 6; i++) {
+    int avatarPart = random.nextInt(48);
+    avatarSequence += avatarPart.toString().padLeft(2, '0'); 
+  }
+
+  return avatarSequence;
+}
 
   @action
   void updateSize(){ 
