@@ -1,6 +1,5 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 import 'package:fodinha_flutter/core/app_icons.dart';
@@ -10,9 +9,9 @@ import 'package:fodinha_flutter/widgets/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/widgets/molecules/player.dart';
 import './dialogs.dart';
 import 'package:fodinha_flutter/model/scoreboard/scoreboard.dart';
+import 'package:fodinha_flutter/shared/constants/avatar.dart';
+import 'package:fodinha_flutter/model/player/player.dart';
 import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
-import 'package:fodinha_flutter/views/playerscreen/components/player_creation_dialog.dart';
-import 'package:fodinha_flutter/views/playerscreen/components/row_buttons.dart';
 import 'package:fodinha_flutter/views/playerscreen/controller/playerscreen_controller.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
@@ -25,8 +24,11 @@ class MainList extends StatelessWidget {
   const MainList({required this.controller, Key? key, }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
+    const avatarData = avatar;
     final store = Provider.of<PlayerViewModel>(context);
+    final formKey = GlobalKey<FormState>();
+    final inputController = TextEditingController();
     
     return SafeArea(
       child: Center(
@@ -196,9 +198,10 @@ class MainList extends StatelessWidget {
                           },
                         ),
                 ); 
-            }
-          ),
-        ],
+              }
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
-import 'package:fodinha_flutter/views/gamescreen/components/eliminated_stamp.dart';
 import 'package:fodinha_flutter/views/gamescreen/components/winner_dialog.dart';
 import 'package:fodinha_flutter/widgets/atoms/app_screen.dart';
 import 'package:fodinha_flutter/widgets/atoms/avatar_player_circle.dart';
