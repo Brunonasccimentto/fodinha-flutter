@@ -1,9 +1,8 @@
 import 'package:fodinha_flutter/model/player/player.dart';
 import 'package:fodinha_flutter/model/scoreboard/scoreboard.dart';
-import 'package:fodinha_flutter/services/app_repository.dart';
+import 'package:fodinha_flutter/model/scoreboard/scoreboard_repository.dart';
 import 'package:fodinha_flutter/shared/enums/count.dart';
 import 'package:fodinha_flutter/views/gamescreen/entities/cards.dart';
-import 'package:isar/isar.dart';
 import 'package:mobx/mobx.dart';
 part 'gamescreen_view_model.g.dart';
 
@@ -32,7 +31,6 @@ abstract class GamescreenViewModelBase with Store {
     _playersLostRound = [..._playersLostRound, value];
   }
 
-
   int sumAllPlayerCountValues(List<PlayerModel> players) {
     int sum = players.fold(0, (counter, obj) {
       counter += obj.count;
@@ -44,34 +42,6 @@ abstract class GamescreenViewModelBase with Store {
 
   void _resetPlayersLostRound(){
     _playersLostRound = [];
-  }
-
-  @action
-  Future<void> newGame(ScoreboardModel scoreboard, List<PlayerModel> players) async {
-    final isarDB = await AppRepository().openDB();
-
-    await isarDB.writeTxn(() async { 
-      await isarDB.scoreboardModels.clear();           // medida provisória para não ocupar memoria / possivel update - AllgamesSaved //
-      await isarDB.scoreboardModels.put(scoreboard);  
-    });
-
-    _scoreboard = scoreboard;
-  
-    await saveLinkedPlayers(scoreboard, players);
-  }
-
-  @action
-  Future<void> saveLinkedPlayers(ScoreboardModel scoreboard, List<PlayerModel> players) async {
-    final isarDB = await AppRepository().openDB();
-
-    scoreboard.players.addAll(players);
-    _scoreboard = scoreboard;
-    
-     await isarDB.writeTxn(() async {
-      await scoreboard.players.save();
-    });
-
-    await updateScoreBoard(scoreboard.scoreboardID);
   }
 
   @action
@@ -91,23 +61,13 @@ abstract class GamescreenViewModelBase with Store {
     }
   }  
 
-   @action
-  Future<void> updateScoreBoard(int id) async {
-    final isarDB = await AppRepository().openDB();
-    final update = await isarDB.scoreboardModels.get(id);
-
-    _scoreboard = update!;
-    
-     await isarDB.writeTxn(() async {
-      await isarDB.scoreboardModels.put(update);
-    });
+  @action
+  Future<void> newGame(ScoreboardModel scoreboard, List<PlayerModel> players) async {
+    await ScoreBoardRepository().newGame(scoreboard, players);
   }
- 
+
   @action
   Future<void> updateRound(int id) async {
-    final isarDB = await AppRepository().openDB();
-    final update = await isarDB.scoreboardModels.get(id);
-    
     cards.increment == Count.increment ? cards.value++ : cards.value--;
 
     if (cards.value == cards.maxValue) {
@@ -117,34 +77,73 @@ abstract class GamescreenViewModelBase with Store {
         cards.increment = Count.increment;
     } 
 
-    update!.round++;
-    update.cards = cards.value; 
-
     _resetPlayersLostRound();
-    
-    await isarDB.writeTxn(() async {
-      await isarDB.scoreboardModels.put(update);  
-    });
-
-    await updateScoreBoard(update.scoreboardID);
+    await ScoreBoardRepository().updateRound(scoreboard, id, cards);
   }
 
-   @action
+  @action
   Future<void> resetStats() async {
-    final isarDB = await AppRepository().openDB();
-
-    final update = await isarDB.scoreboardModels.where().findFirst();
-    update!.cards = 1;
-    update.round = 1;
     _playersLostRound = [];
     winner = '';
-
-    await isarDB.writeTxn(() async {      
-      await isarDB.scoreboardModels.put(update);  
-    });
-
-    updateScoreBoard(update.scoreboardID);
+    cards = Cards();
+    _scoreboard = await ScoreBoardRepository().resetStats();
   }
+
+  @action
+  Future<void> updateScoreBoard(int id) async {
+    _scoreboard = await ScoreBoardRepository().updateScoreBoard(id);
+  }
+
+//   Future<void> saveLinkedPlayers(ScoreboardModel scoreboard, List<PlayerModel> players) async {
+//     final isarDB = await databaseInstance;
+
+//     scoreboard.players.addAll(players);
+//     _scoreboard = scoreboard;
+    
+//      await isarDB.writeTxn(() async {
+//       await scoreboard.players.save();
+//     });
+
+//     await updateScoreBoard(scoreboard.scoreboardID);
+//   }
+
+//   Future<void> updateScoreBoard(int id) async {
+//     final isarDB = await databaseInstance;
+//     final update = await isarDB.scoreboardModels.get(id);
+
+//     _scoreboard = update!;
+    
+//      await isarDB.writeTxn(() async {
+//       await isarDB.scoreboardModels.put(update);
+//     });
+//   }
+ 
+//   Future<void> updateRound(int id) async {
+//     final isarDB = await databaseInstance;
+//     final update = await isarDB.scoreboardModels.get(id);
+    
+//     cards.increment == Count.increment ? cards.value++ : cards.value--;
+
+//     if (cards.value == cards.maxValue) {
+//         cards.increment = Count.decrement;
+//     }
+//     if (cards.value == cards.minValue) {
+//         cards.increment = Count.increment;
+//     } 
+
+//     update!.round++;
+//     update.cards = cards.value; 
+
+//     _resetPlayersLostRound();
+    
+//     await isarDB.writeTxn(() async {
+//       await isarDB.scoreboardModels.put(update);  
+//     });
+
+//     await updateScoreBoard(update.scoreboardID);
+//   }
+
+  
 
   // @action
   // Future<List<ScoreboardModel>> listAllSavedGames() async {
