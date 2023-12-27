@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fodinha_flutter/views/gamescreen/widgets/eliminated_stamp.dart';
 import 'package:fodinha_flutter/widgets/atoms/avatar_player_circle.dart';
 import 'package:fodinha_flutter/widgets/atoms/custom_icon_button.dart';
 import 'package:fodinha_flutter/widgets/molecules/player.dart';
 import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
-import 'package:fodinha_flutter/views/gamescreen/components/eliminated_stamp.dart';
 import 'package:provider/provider.dart';
 
 class PlayerCard extends StatelessWidget {

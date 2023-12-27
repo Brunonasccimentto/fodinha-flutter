@@ -7,7 +7,7 @@ import 'package:fodinha_flutter/widgets/atoms/avatar_player_circle.dart';
 import 'package:fodinha_flutter/widgets/atoms/custom_field.dart';
 import 'package:fodinha_flutter/widgets/atoms/elevated_text_buttom.dart';
 import 'package:fodinha_flutter/widgets/molecules/player.dart';
-import './dialogs.dart';
+import 'dialogs.dart';
 import 'package:fodinha_flutter/model/scoreboard/scoreboard.dart';
 import 'package:fodinha_flutter/shared/constants/avatar.dart';
 import 'package:fodinha_flutter/model/player/player.dart';

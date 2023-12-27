@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -40,23 +41,34 @@ class AvatarDialogs extends StatelessWidget {
                         // tem como melhorar o avatar_player
                         Container(
                           child: controller.svg.contains(".svg")
-                              ? SvgPicture.asset(
-                                  controller.svg,
-                                  width: 150,
-                                  height: 150,
-                                )
-                              : controller.svg.contains("xmlns")
-                              ? SvgPicture.string(
-                                  controller.svg,
-                                  width: 150,
-                                  height: 150,
-                                )
-                              : CircleColor(
+                            ? SvgPicture.asset(
+                                controller.svg,
+                                width: 150,
+                                height: 150,
+                              )
+                            : controller.svg.contains("xmlns")
+                            ? SvgPicture.string(
+                                controller.svg,
+                                width: 150,
+                                height: 150,
+                              )
+                            : controller.svg.contains("/cache") 
+                            ?  ClipOval(
+                                child: SizedBox.fromSize(
+                                  size: const Size.fromRadius(75),                 
+                                  child: Image.file(File(controller.svg),                                                   
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              )
+                            : CircleColor(
                                 data: data,
                                 width: 150,
                                 height: 150,
                                 labelSize: 32,
-                                radius: 90,))
+                                radius: 90
+                              )                
+                        )
                       ],
                     ),
                   ),
