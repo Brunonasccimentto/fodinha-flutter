@@ -132,7 +132,7 @@ mixin _$PlayerScreenController on _PlayerScreenControllerBase, Store {
   }
 
   @override
-  dynamic createRandomNewAvatar() {
+  void createRandomNewAvatar() {
     final _$actionInfo = _$_PlayerScreenControllerBaseActionController
         .startAction(name: '_PlayerScreenControllerBase.createRandomNewAvatar');
     try {

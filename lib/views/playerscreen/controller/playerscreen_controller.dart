@@ -73,6 +73,7 @@ abstract class _PlayerScreenControllerBase with Store {
     final XFile? selectedTemporaryImage = await imagePicker.pickImage(source: ImageSource.camera);
     if(selectedTemporaryImage != null){
       _selectedImage = XFile(selectedTemporaryImage.path);
+      picture = (_selectedImage == null ? '' : _selectedImage?.path)!;
     }
   }
 
@@ -81,6 +82,7 @@ abstract class _PlayerScreenControllerBase with Store {
     final XFile? selectedTemporaryImage = await imagePicker.pickImage(source: ImageSource.gallery);
     if(selectedTemporaryImage != null){
       _selectedImage = XFile(selectedTemporaryImage.path);
+      picture = (_selectedImage == null ? '' : _selectedImage?.path)!;
     }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fodinha_flutter/widgets/atoms/circle_color.dart';
@@ -22,8 +24,6 @@ class AvatarPlayerCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    
-  
     return Opacity(
       opacity: opacity ?? 1,
       child: Container(
@@ -44,13 +44,22 @@ class AvatarPlayerCircle extends StatelessWidget {
                     width: width ?? 80,
                     height: height ?? 80,
                   )
-                : data.picture.contains("") ? 
-                
+                : data.picture.contains("/cache") ? 
+                  ClipOval(
+                    child: SizedBox.fromSize(
+                      size: const Size.fromRadius(40),                 
+                      child: Image.file(File(data.picture),                                                   
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+                :
                   CircleColor(
-                  data: data.runtimeType == PlayerModel ? data : secondData,
-                  width: width,
-                  height: height,
-                  radius: 90,) : const CircleAvatar()
+                    data: data.runtimeType == PlayerModel ? data : secondData,
+                    width: width,
+                    height: height,
+                    radius: 90
+                  )   
           ),
         ),
       ),
