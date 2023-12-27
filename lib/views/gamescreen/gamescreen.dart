@@ -3,9 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fodinha_flutter/widgets/atoms/app_screen.dart';
 import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
-import 'package:fodinha_flutter/views/gamescreen/components/header.dart';
-import 'package:fodinha_flutter/views/gamescreen/components/player_card.dart';
-import 'package:fodinha_flutter/views/gamescreen/components/start_button.dart';
+import 'package:fodinha_flutter/views/gamescreen/widgets/header.dart';
+import 'package:fodinha_flutter/views/gamescreen/widgets/player_card.dart';
+import 'package:fodinha_flutter/views/gamescreen/widgets/start_button.dart';
 import 'package:provider/provider.dart';
 
 class GameScreen extends StatefulWidget {
