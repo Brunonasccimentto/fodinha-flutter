@@ -26,8 +26,7 @@ class AppWidget extends StatelessWidget {
         Provider<PlayerViewModel>.value(
           value: PlayerViewModel()),
         Provider<GamescreenViewModel>.value(
-        value: GamescreenViewModel()),
-        
+          value: GamescreenViewModel()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false, 
