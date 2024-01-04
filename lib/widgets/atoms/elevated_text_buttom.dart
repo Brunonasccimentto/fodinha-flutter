@@ -21,7 +21,7 @@ class ElevatedTextButtonDefault extends StatelessWidget {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
           elevation: 10,
-          backgroundColor: Colors.indigo,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           fixedSize: size ?? Size(MediaQuery.of(context).size.width / 2.3, 50),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))
       ),
