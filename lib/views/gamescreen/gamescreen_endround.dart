@@ -80,7 +80,6 @@ class GameScreenEndRound extends StatelessWidget {
                             gameScreenStore.playersLostRound.contains(store.playerList[index].playerID) ?
                             gameScreenStore.playersLostRound.remove(store.playerList[index].playerID) :                              
                             gameScreenStore.playersLostRound = store.playerList[index].playerID;
-                    
                             store.getPlayerList();                                  
                           },
                         ),
@@ -123,12 +122,14 @@ class GameScreenEndRound extends StatelessWidget {
 
                       if(gameScreenStore.winner.isNotEmpty) {
                         openDialog();
-                      } else {
-                          await store.roundDealer();                                                                                                         
-                          await gameScreenStore.updateRound(gameScreenStore.scoreboard.scoreboardID);                                              
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushReplacementNamed(context, "/GameScreen");
-                      }
+                        return;
+                      } 
+
+                      await store.roundDealer();                                                                                                         
+                      await gameScreenStore.updateRound(gameScreenStore.scoreboard.scoreboardID);                                              
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushReplacementNamed(context, "/GameScreen");
+                      
                     },
                     text: "Finalizar rodada"),
                 ),
