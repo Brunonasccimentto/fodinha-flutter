@@ -45,7 +45,7 @@ $ flutter install
 ### ScreenShots
 
 #### Tela inicial
-<img src="assets/screenshoots/Screenshot_1704329589.png">
+<img src="assets/screenshoots/Screenshot_1702411950.png">
 
 #### Tela de jogadores
 <img src="assets/screenshoots/Screenshot_1704329211.png">
