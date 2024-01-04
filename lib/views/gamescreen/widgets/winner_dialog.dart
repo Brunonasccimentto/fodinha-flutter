@@ -7,7 +7,8 @@ class WinnerDialog extends StatelessWidget {
   final VoidCallback onContinuePressed;
   final VoidCallback onNewGamePressed;
 
-  const WinnerDialog({super.key, 
+  const WinnerDialog({
+    super.key,
     required this.winner,
     required this.onContinuePressed,
     required this.onNewGamePressed,
@@ -18,22 +19,22 @@ class WinnerDialog extends StatelessWidget {
     return winner.isNotEmpty
         ? Stack(
             children: [
-              
               Positioned(
-                bottom: 0,
+                bottom: 0, 
                 child: AppAssets().fireworks
               ),
               Positioned(
-                
                 child: Align(
                   alignment: Alignment.center,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    child: Container(                
+                    child: Container(
                       padding: const EdgeInsets.all(16.0),
                       width: MediaQuery.of(context).size.width - 60,
                       height: MediaQuery.of(context).size.height / 1.6,
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -44,30 +45,23 @@ class WinnerDialog extends StatelessWidget {
                               decoration: TextDecoration.none,
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,                        
+                              color: Colors.white,
                             ),
                           ),
-
                           AppAssets().trophy,
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               ElevatedTextButtonDefault(
-                                onPressed: onContinuePressed, 
+                                onPressed: onContinuePressed,
                                 size: const Size(120, 40),
-                                text: 'Continuar'
-                              ),
-                  
+                                text: 'Continuar'),
                               ElevatedTextButtonDefault(
-                                onPressed: onNewGamePressed, 
+                                onPressed: onNewGamePressed,
                                 size: const Size(120, 40),
-                                text: 'Novo jogo'
-                              ),
-                                                   
+                                text: 'Novo jogo'),
                             ],
                           ),
-                          
                         ],
                       ),
                     ),
@@ -75,10 +69,9 @@ class WinnerDialog extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 0,
+                top: 0, 
                 child: AppAssets().fireworks
               ),
-             
             ],
           )
         : Container();
