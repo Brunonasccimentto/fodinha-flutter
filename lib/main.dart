@@ -34,6 +34,7 @@ class AppWidget extends StatelessWidget {
             colorScheme: ColorScheme.fromSwatch(
               primarySwatch: Colors.indigo,
               accentColor: Colors.white,
+              cardColor: const Color.fromARGB(255, 218, 218, 218),
               backgroundColor: const Color.fromARGB(255, 125, 139, 218),
               errorColor: const Color.fromARGB(255, 255, 27, 11)
             )
