@@ -37,10 +37,38 @@ $ flutter install
 
 ### Como usar
 - **Adicionar jogadores:** Toque no botão adicionar jogadores.
-- **Definir avatar:** Para escolher um avatar toque na área colorida com as iniciais do jogador.
+- **Definir foto ou avatar:** Para escolher um avatar toque na área colorida com as iniciais do jogador.
 - **Novo Dealer:** Para definir um novo dealer (icone de moeda roxa) pressione um jogador não dealer.
 - **Defina o número de rounds:** Para cada jogador defina o número de rounds pelos botões de - e +.
 - **Defina o perdedor:** Para Selecionar o perdedor, toque nos jogadores que perderam o round.
+
+### ScreenShots
+
+#### Tela inicial
+<img src="assets/screenshoots/Screenshot_1704329589.png">
+
+#### Tela de jogadores
+<img src="assets/screenshoots/Screenshot_1704329211.png">
+
+#### Modal de avatares
+<img src="assets/screenshoots/Screenshot_1704329106.png">
+
+#### Jogadores arrastáveis para excluir
+<img src="assets/screenshoots/Screenshot_1704329247.png">
+
+#### Tela do jogo / Scoreboard
+<img src="assets/screenshoots/Screenshot_1704329333.png">
+
+<img src="assets/screenshoots/Screenshot_1704329502.png">
+
+#### Tela Fim de round
+<img src="assets/screenshoots/Screenshot_1704329391.png">
+
+<img src="assets/screenshoots/Screenshot_1704329405.png">
+
+#### Modal do vencedor
+<img src="assets/screenshoots/Screenshot_1704330728.png">
+
 
 
 
