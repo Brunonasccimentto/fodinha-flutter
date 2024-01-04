@@ -13,6 +13,7 @@ class AvatarDialogs extends StatelessWidget {
   final PlayerScreenController controller;
   final VoidCallback? onSave;
   final VoidCallback? onCancel;
+  final Color? backgroundColor;
 
   const AvatarDialogs(
     {required this.data,
@@ -20,7 +21,8 @@ class AvatarDialogs extends StatelessWidget {
     required this.controller,
     this.onSave,
     this.onCancel, 
-    Key? key}) : super(key: key);
+    this.backgroundColor,
+    Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) { 
@@ -28,6 +30,7 @@ class AvatarDialogs extends StatelessWidget {
     return Dialog(
         insetAnimationDuration: const Duration(milliseconds: 400),
         insetAnimationCurve: Curves.bounceIn,
+        backgroundColor: backgroundColor,
         child: Column(
           children: [
             Observer(
