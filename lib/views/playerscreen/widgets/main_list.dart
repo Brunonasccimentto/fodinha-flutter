@@ -83,10 +83,12 @@ class MainList extends StatelessWidget {
                                       data: store.playerList[index], 
                                       avatarData: avatarData, 
                                       controller: controller,
+                                      backgroundColor: Theme.of(context).cardColor,
                                       onSave: ()=> store.updatePicture(store.playerList[index].playerID, controller.svg));
                                     },
                                 );
-                              }, showCounter: false,
+                              },
+                              showCounter: false,
                               child: AvatarPlayerCircle(data: store.playerList[index]))
                           );
                         },
@@ -116,10 +118,12 @@ class MainList extends StatelessWidget {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
+                                    backgroundColor: Theme.of(context).cardColor,
                                     content: Form(
                                       key: formKey,
                                       child: CustomField(
                                         labelText: "Nome do jogador",
+                                        textColor: Theme.of(context).colorScheme.primary,
                                         autoFocus: true,
                                         controller: inputController,                                
                                         validator: (String? value) {                                   
