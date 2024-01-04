@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class CustomField extends StatelessWidget {
   final String labelText;
+  final Color? textColor;
   final Function(String)? onChanged;
   final bool? autoFocus;
   final TextInputType? keyboardType;
@@ -10,7 +10,7 @@ class CustomField extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String?) validator;
 
-  const CustomField({required this.labelText, this.onChanged, this.keyboardType, this.autoFocus, this.initialValue, required this.validator, this.controller , Key? key})
+  const CustomField({required this.labelText, this.onChanged, this.keyboardType, this.autoFocus, this.initialValue, required this.validator, this.controller , Key? key, this.textColor})
       : super(key: key);
 
   @override
@@ -23,8 +23,10 @@ class CustomField extends StatelessWidget {
       controller: controller,
       validator: validator,
       decoration: InputDecoration(            
-        labelText: labelText,    
-         
+        labelText: labelText, 
+        labelStyle: TextStyle(
+          color: textColor
+        )        
       ),
       
     );
