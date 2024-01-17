@@ -6,7 +6,9 @@ import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.d
 import 'package:fodinha_flutter/views/gamescreen/widgets/header.dart';
 import 'package:fodinha_flutter/views/gamescreen/widgets/player_card.dart';
 import 'package:fodinha_flutter/views/gamescreen/widgets/start_button.dart';
+import 'package:fodinha_flutter/widgets/atoms/elevated_text_buttom.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -21,6 +23,52 @@ class _GameScreenState extends State<GameScreen> {
   void didChangeDependencies() {
     Provider.of<GamescreenViewModel>(context).updateScoreBoard(1);
     super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkFirstTime();
+  }
+
+  bool isFirstTime = true;
+
+  Future<void> checkFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+
+    if (isFirstTime) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context, 
+        builder: (BuildContext context) {
+          return Dialog(
+            
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              height: MediaQuery.of(context).size.height / 5,
+              child: Stack(
+                alignment: AlignmentDirectional.topCenter,
+                children: [
+                  Text('Pressione a imagem de um jogador para ver o histórico de cartas jogadas!',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.secondary
+                  )),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: ElevatedTextButtonDefault(
+                      onPressed: () => Navigator.pop(context),
+                      size: const Size(120, 40),
+                      text: 'Continuar'),
+                  )
+                ]),
+            )
+          );
+        });
+    
+      prefs.setBool('isFirstTime', false);
+    }
   }
 
   @override
