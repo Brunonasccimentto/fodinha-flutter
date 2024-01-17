@@ -8,9 +8,12 @@ import 'package:mobx/mobx.dart';
 part "player_view_model.g.dart";
 
 // ignore: library_private_types_in_public_api
-class PlayerViewModel = _PlayerViewModelBase with _$PlayerViewModel;
+class PlayerViewModel = PlayerViewModelBase with _$PlayerViewModel;
   
-abstract class _PlayerViewModelBase with Store {
+abstract class PlayerViewModelBase with Store {
+  final PlayerRepository repository;
+
+  PlayerViewModelBase({required this.repository});
   
   @observable
   List<PlayerModel> _playerList = [];
@@ -28,13 +31,13 @@ abstract class _PlayerViewModelBase with Store {
   //startScreen actions
   @action
   Future<void> newGame() async{
-    await PlayerRepository().clearPlayers();
+    await repository.clearPlayers();
     await getPlayerList();
   }
 
   @action
   Future<void> resetStats() async{
-    await PlayerRepository().resetPlayerStats(_playerList);
+    await repository.resetPlayerStats(_playerList);
     await getPlayerList();
   }
 
@@ -46,7 +49,7 @@ abstract class _PlayerViewModelBase with Store {
       playerList.isEmpty ? player.dealer = true : player.dealer = false;
       player.color = _randomColor();
 
-      await PlayerRepository().createPlayer(player);
+      await repository.createPlayer(player);
     
       await getPlayerList();
     } 
@@ -54,32 +57,32 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   Future<void> deletePlayer(int playerID) async{
-    await PlayerRepository().deletePlayer(playerID);
+    await repository.deletePlayer(playerID);
     await getPlayerList();
   }
 
   @action
   Future<List<PlayerModel>> getPlayerList() async{
-    _playerList = await PlayerRepository().fetchPlayerList(_playerList);
+    _playerList = await repository.fetchPlayerList(_playerList);
     return _playerList;
   }
 
   @action
   Future<void> updatePicture(int playerID, String asset) async{
-    await PlayerRepository().updatePicture(playerID, asset);
+    await repository.updatePicture(playerID, asset);
     await getPlayerList();
   }
 
   //GameScreen actions
   @action
   Future<void> setDealer(int playerID) async{
-    await PlayerRepository().setDealer(playerID);
+    await repository.setDealer(playerID);
     await getPlayerList();
   }
 
   @action
   Future<void> countHowManyRoundsPlayerDo(int payload, int playerID) async{
-    await PlayerRepository().countHowManyRoundsPlayerDo(payload, playerID);
+    await repository.countHowManyRoundsPlayerDo(payload, playerID);
     await getPlayerList();
   }
 
@@ -105,14 +108,14 @@ abstract class _PlayerViewModelBase with Store {
       _playerList[newDealerIndex].dealer = true;
     }
 
-    await PlayerRepository().roundDealer(_playerList);
+    await repository.roundDealer(_playerList);
     await getPlayerList();
   }
 
   //GameScreenEndActions
   @action
   Future<void> updatePlayersLostRound(List<int> players) async{
-    await PlayerRepository().updatePlayersLostRound(players);
+    await repository.updatePlayersLostRound(players);
     await getPlayerList();
   }
 

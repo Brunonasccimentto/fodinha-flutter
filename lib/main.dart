@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fodinha_flutter/model/player/player_repository.dart';
+import 'package:fodinha_flutter/model/scoreboard/scoreboard_repository.dart';
+import 'package:fodinha_flutter/services/database.dart';
 import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
 import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
 import 'package:fodinha_flutter/views/gamescreen/gamescreen.dart';
 import 'package:fodinha_flutter/views/gamescreen/gamescreen_endRound.dart';
 import 'package:fodinha_flutter/feature/loadingscreen/loadingscreen.dart';
+import 'package:fodinha_flutter/views/player_history/player_history.dart';
 import 'package:fodinha_flutter/views/playerscreen/playerscreen.dart';
 import 'package:fodinha_flutter/views/startscreen/startscreen.dart';
 import 'package:provider/provider.dart';
@@ -24,9 +28,9 @@ class AppWidget extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<PlayerViewModel>.value(
-          value: PlayerViewModel()),
+          value: PlayerViewModel(repository: PlayerRepository(database: DatabaseService()))),
         Provider<GamescreenViewModel>.value(
-          value: GamescreenViewModel()),
+          value: GamescreenViewModel(repository: ScoreBoardRepository(database: DatabaseService()))),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false, 
@@ -46,6 +50,7 @@ class AppWidget extends StatelessWidget {
             "/PlayerScreen":(BuildContext context) => const PlayerScreen(),
             "/GameScreen": (BuildContext context) => const GameScreen(),
             "/GameScreenEndRound": (BuildContext context) => const GameScreenEndRound(),
+            "/PlayerHistory": (BuildContext context) => const PlayerHistory(),
           }),
     );
   }

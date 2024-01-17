@@ -9,6 +9,9 @@ part 'gamescreen_view_model.g.dart';
 class GamescreenViewModel = GamescreenViewModelBase with _$GamescreenViewModel;
 
 abstract class GamescreenViewModelBase with Store {
+  final ScoreBoardRepository repository;
+
+  GamescreenViewModelBase({required this.repository});
 
   Cards cards = Cards();
 
@@ -63,7 +66,7 @@ abstract class GamescreenViewModelBase with Store {
 
   @action
   Future<void> newGame(ScoreboardModel scoreboard, List<PlayerModel> players) async {
-    await ScoreBoardRepository().newGame(scoreboard, players);
+    await repository.newGame(scoreboard, players);
   }
 
   @action
@@ -78,7 +81,7 @@ abstract class GamescreenViewModelBase with Store {
     } 
 
     _resetPlayersLostRound();
-    await ScoreBoardRepository().updateRound(scoreboard, id, cards);
+    await repository.updateRound(scoreboard, id, cards);
   }
 
   @action
@@ -86,11 +89,11 @@ abstract class GamescreenViewModelBase with Store {
     _playersLostRound = [];
     winner = '';
     cards = Cards();
-    _scoreboard = await ScoreBoardRepository().resetStats();
+    _scoreboard = await repository.resetStats();
   }
 
   @action
   Future<void> updateScoreBoard(int id) async {
-    _scoreboard = await ScoreBoardRepository().updateScoreBoard(id);
+    _scoreboard = await repository.updateScoreBoard(id);
   }
 }

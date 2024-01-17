@@ -1,12 +1,16 @@
-import 'package:fodinha_flutter/model/player/player.dart';
-import 'package:fodinha_flutter/services/database.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:isar/isar.dart';
 
+import 'package:fodinha_flutter/model/player/player.dart';
+import 'package:fodinha_flutter/services/database.dart';
+
 class PlayerRepository {
-  final databaseInstance = DatabaseService().openDB();
+  final DatabaseService database;
+
+  PlayerRepository({required this.database});
 
   Future<void> clearPlayers() async{
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
 
     await isarDB.writeTxn(() async {
       await isarDB.playerModels.clear(); 
@@ -14,7 +18,7 @@ class PlayerRepository {
   }
 
   Future<void> resetPlayerStats(List<PlayerModel> playerList) async{
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
     
     for (PlayerModel item in playerList) {
       item.count = 0;
@@ -28,7 +32,7 @@ class PlayerRepository {
 
 
   Future<void> createPlayer(PlayerModel player) async{
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
 
     await isarDB.writeTxn(() async {
       await isarDB.playerModels.put(player);  
@@ -36,7 +40,7 @@ class PlayerRepository {
   }
 
   Future<void> deletePlayer(int playerID) async{
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
    
     await isarDB.writeTxn(() async {   
       await isarDB.playerModels.delete(playerID);
@@ -44,7 +48,7 @@ class PlayerRepository {
   }
 
   Future<List<PlayerModel>> fetchPlayerList(List<PlayerModel> playerList) async{
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
     final players = await isarDB.playerModels.filter().dealerEqualTo(true).findAll();
     final newDealer = await isarDB.playerModels.filter().dealerEqualTo(false).findFirst();
     
@@ -65,7 +69,7 @@ class PlayerRepository {
   }
 
   Future<void> updatePicture(int playerID, String asset) async{
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
 
     PlayerModel? updatedPlayer = await isarDB.playerModels.get(playerID);
     updatedPlayer!.picture = asset;
@@ -77,7 +81,7 @@ class PlayerRepository {
 
   //GameScreen actions
   Future<void> setDealer(int playerID) async{
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
 
     PlayerModel? oldDealer = await isarDB.playerModels.filter().dealerEqualTo(true).findFirst();
     PlayerModel? newDealer = await isarDB.playerModels.get(playerID);
@@ -91,7 +95,7 @@ class PlayerRepository {
   }
 
   Future<void> countHowManyRoundsPlayerDo(int payload, int playerID) async{
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
 
     PlayerModel? updatePlayerCount = await isarDB.playerModels.get(playerID);
     updatePlayerCount!.count = payload;
@@ -102,7 +106,7 @@ class PlayerRepository {
   }
 
   Future<void> roundDealer(List<PlayerModel> playerList) async {
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
   
     await isarDB.writeTxn(() async {
       await isarDB.playerModels.putAll(playerList);
@@ -111,7 +115,7 @@ class PlayerRepository {
 
   //GameScreenEndActions
   Future<void> updatePlayersLostRound(List<int> players) async{
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
 
     List<PlayerModel?> playersToUpdate = await isarDB.playerModels.getAll(players);
 

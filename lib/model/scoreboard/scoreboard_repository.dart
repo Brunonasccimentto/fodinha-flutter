@@ -5,10 +5,12 @@ import 'package:fodinha_flutter/views/gamescreen/entities/cards.dart';
 import 'package:isar/isar.dart';
 
 class ScoreBoardRepository {
-  final databaseInstance = DatabaseService().openDB();
+  final DatabaseService database;
 
-   Future<ScoreboardModel> newGame(ScoreboardModel scoreboard, List<PlayerModel> players) async {
-    final isarDB = await databaseInstance;
+  ScoreBoardRepository({required this.database}); 
+
+  Future<ScoreboardModel> newGame(ScoreboardModel scoreboard, List<PlayerModel> players) async {
+    final isarDB = await database.openDB();
 
     await isarDB.writeTxn(() async { 
       await isarDB.scoreboardModels.clear();           // medida provisória para não ocupar memoria / possivel update - AllgamesSaved //
@@ -19,7 +21,7 @@ class ScoreBoardRepository {
   }
 
   Future<ScoreboardModel> updateScoreBoard(int id) async {
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
     final update = await isarDB.scoreboardModels.get(id);
 
     await isarDB.writeTxn(() async {
@@ -30,7 +32,7 @@ class ScoreBoardRepository {
   }
  
   Future<void> updateRound(ScoreboardModel scoreboard, int id, Cards cards) async {
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
     final update = await isarDB.scoreboardModels.get(id);
     
     update!.round++;
@@ -44,7 +46,7 @@ class ScoreBoardRepository {
   }
 
   Future<ScoreboardModel> resetStats() async {
-    final isarDB = await databaseInstance;
+    final isarDB = await database.openDB();
     final update = await isarDB.scoreboardModels.where().findFirst();
     
     update!.cards = 1;

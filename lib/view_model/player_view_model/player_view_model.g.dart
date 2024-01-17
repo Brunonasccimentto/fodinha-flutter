@@ -8,17 +8,17 @@ part of 'player_view_model.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
+mixin _$PlayerViewModel on PlayerViewModelBase, Store {
   Computed<List<PlayerModel>>? _$playerListComputed;
 
   @override
   List<PlayerModel> get playerList => (_$playerListComputed ??=
           Computed<List<PlayerModel>>(() => super.playerList,
-              name: '_PlayerViewModelBase.playerList'))
+              name: 'PlayerViewModelBase.playerList'))
       .value;
 
   late final _$_playerListAtom =
-      Atom(name: '_PlayerViewModelBase._playerList', context: context);
+      Atom(name: 'PlayerViewModelBase._playerList', context: context);
 
   @override
   List<PlayerModel> get _playerList {
@@ -34,7 +34,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   late final _$newGameAsyncAction =
-      AsyncAction('_PlayerViewModelBase.newGame', context: context);
+      AsyncAction('PlayerViewModelBase.newGame', context: context);
 
   @override
   Future<void> newGame() {
@@ -42,7 +42,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   late final _$resetStatsAsyncAction =
-      AsyncAction('_PlayerViewModelBase.resetStats', context: context);
+      AsyncAction('PlayerViewModelBase.resetStats', context: context);
 
   @override
   Future<void> resetStats() {
@@ -50,7 +50,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   late final _$createPlayerAsyncAction =
-      AsyncAction('_PlayerViewModelBase.createPlayer', context: context);
+      AsyncAction('PlayerViewModelBase.createPlayer', context: context);
 
   @override
   Future<void> createPlayer(PlayerModel player) {
@@ -58,7 +58,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   late final _$deletePlayerAsyncAction =
-      AsyncAction('_PlayerViewModelBase.deletePlayer', context: context);
+      AsyncAction('PlayerViewModelBase.deletePlayer', context: context);
 
   @override
   Future<void> deletePlayer(int playerID) {
@@ -66,7 +66,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   late final _$getPlayerListAsyncAction =
-      AsyncAction('_PlayerViewModelBase.getPlayerList', context: context);
+      AsyncAction('PlayerViewModelBase.getPlayerList', context: context);
 
   @override
   Future<List<PlayerModel>> getPlayerList() {
@@ -74,7 +74,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   late final _$updatePictureAsyncAction =
-      AsyncAction('_PlayerViewModelBase.updatePicture', context: context);
+      AsyncAction('PlayerViewModelBase.updatePicture', context: context);
 
   @override
   Future<void> updatePicture(int playerID, String asset) {
@@ -83,7 +83,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   late final _$setDealerAsyncAction =
-      AsyncAction('_PlayerViewModelBase.setDealer', context: context);
+      AsyncAction('PlayerViewModelBase.setDealer', context: context);
 
   @override
   Future<void> setDealer(int playerID) {
@@ -91,7 +91,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   late final _$countHowManyRoundsPlayerDoAsyncAction = AsyncAction(
-      '_PlayerViewModelBase.countHowManyRoundsPlayerDo',
+      'PlayerViewModelBase.countHowManyRoundsPlayerDo',
       context: context);
 
   @override
@@ -101,7 +101,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   late final _$roundDealerAsyncAction =
-      AsyncAction('_PlayerViewModelBase.roundDealer', context: context);
+      AsyncAction('PlayerViewModelBase.roundDealer', context: context);
 
   @override
   Future<void> roundDealer() {
@@ -109,7 +109,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   late final _$updatePlayersLostRoundAsyncAction = AsyncAction(
-      '_PlayerViewModelBase.updatePlayersLostRound',
+      'PlayerViewModelBase.updatePlayersLostRound',
       context: context);
 
   @override
