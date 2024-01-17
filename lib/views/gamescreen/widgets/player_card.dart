@@ -27,7 +27,11 @@ class PlayerCard extends StatelessWidget {
               Player(
                 data: store.playerList[index],
                 showCounter: true,
-                child: AvatarPlayerCircle(data: store.playerList[index]),
+                child: Hero(
+                  tag: store.playerList[index].playerID,
+                  child: AvatarPlayerCircle(data: store.playerList[index]),
+                ),
+                onLongPress: () => Navigator.of(context).pushNamed('/PlayerHistory', arguments: store.playerList[index]),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
