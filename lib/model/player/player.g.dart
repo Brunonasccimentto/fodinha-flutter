@@ -32,18 +32,23 @@ const PlayerModelSchema = CollectionSchema(
       name: r'dealer',
       type: IsarType.bool,
     ),
-    r'name': PropertySchema(
+    r'historyCount': PropertySchema(
       id: 3,
+      name: r'historyCount',
+      type: IsarType.longList,
+    ),
+    r'name': PropertySchema(
+      id: 4,
       name: r'name',
       type: IsarType.string,
     ),
     r'picture': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'picture',
       type: IsarType.string,
     ),
     r'points': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'points',
       type: IsarType.long,
     )
@@ -68,6 +73,7 @@ int _playerModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.historyCount.length * 8;
   bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.picture.length * 3;
   return bytesCount;
@@ -82,9 +88,10 @@ void _playerModelSerialize(
   writer.writeLong(offsets[0], object.color);
   writer.writeLong(offsets[1], object.count);
   writer.writeBool(offsets[2], object.dealer);
-  writer.writeString(offsets[3], object.name);
-  writer.writeString(offsets[4], object.picture);
-  writer.writeLong(offsets[5], object.points);
+  writer.writeLongList(offsets[3], object.historyCount);
+  writer.writeString(offsets[4], object.name);
+  writer.writeString(offsets[5], object.picture);
+  writer.writeLong(offsets[6], object.points);
 }
 
 PlayerModel _playerModelDeserialize(
@@ -94,14 +101,15 @@ PlayerModel _playerModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = PlayerModel(
-    name: reader.readString(offsets[3]),
+    name: reader.readString(offsets[4]),
   );
   object.color = reader.readLong(offsets[0]);
   object.count = reader.readLong(offsets[1]);
   object.dealer = reader.readBool(offsets[2]);
-  object.picture = reader.readString(offsets[4]);
+  object.historyCount = reader.readLongList(offsets[3]) ?? [];
+  object.picture = reader.readString(offsets[5]);
   object.playerID = id;
-  object.points = reader.readLong(offsets[5]);
+  object.points = reader.readLong(offsets[6]);
   return object;
 }
 
@@ -119,10 +127,12 @@ P _playerModelDeserializeProp<P>(
     case 2:
       return (reader.readBool(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongList(offset) ?? []) as P;
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
+      return (reader.readString(offset)) as P;
+    case 6:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -340,6 +350,151 @@ extension PlayerModelQueryFilter
         property: r'dealer',
         value: value,
       ));
+    });
+  }
+
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      historyCountElementEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'historyCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      historyCountElementGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'historyCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      historyCountElementLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'historyCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      historyCountElementBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'historyCount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      historyCountLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'historyCount',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      historyCountIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'historyCount',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      historyCountIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'historyCount',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      historyCountLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'historyCount',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      historyCountLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'historyCount',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<PlayerModel, PlayerModel, QAfterFilterCondition>
+      historyCountLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'historyCount',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
     });
   }
 
@@ -906,6 +1061,12 @@ extension PlayerModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<PlayerModel, PlayerModel, QDistinct> distinctByHistoryCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'historyCount');
+    });
+  }
+
   QueryBuilder<PlayerModel, PlayerModel, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -950,6 +1111,13 @@ extension PlayerModelQueryProperty
   QueryBuilder<PlayerModel, bool, QQueryOperations> dealerProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dealer');
+    });
+  }
+
+  QueryBuilder<PlayerModel, List<int>, QQueryOperations>
+      historyCountProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'historyCount');
     });
   }
 

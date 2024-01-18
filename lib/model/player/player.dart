@@ -10,6 +10,7 @@ class PlayerModel {
   int points = 0;
   bool dealer = false;
   String picture = "";
+  List<int> historyCount = [];
 
   PlayerModel({required this.name});
 
