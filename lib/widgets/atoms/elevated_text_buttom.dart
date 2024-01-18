@@ -30,20 +30,9 @@ class ElevatedTextButtonDefault extends StatelessWidget {
       label: Text(text,
           style: TextStyle(
             color: Theme.of(context).colorScheme.secondary, 
-            fontSize: fontSize ?? 12
+            fontSize: fontSize ?? 12,      
           )
       ),
     );
   }
 }
-
-// ElevatedButton(
-//                 style: ElevatedButton.styleFrom(
-//                   elevation: 10,
-//                   padding: const EdgeInsets.symmetric(horizontal: 40),
-//                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) 
-//                 ),
-//                 onPressed: () {
-//                   Navigator.pushNamed(context, "/PlayerScreen");
-//                 }, 
-//                 child: const Text("Começar"))
