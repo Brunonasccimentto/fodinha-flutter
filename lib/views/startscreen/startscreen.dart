@@ -42,7 +42,7 @@ class _StartScreenState extends State<StartScreen> {
                 Navigator.pushNamed(context, "/PlayerScreen");
               }, 
               text: 'Novo jogo',
-              size: const Size(150, 30),
+              size: const Size(180, 30),
               fontSize: 14,
             ),
 
@@ -60,7 +60,7 @@ class _StartScreenState extends State<StartScreen> {
                 ).show(context);
               }, 
               text: "Carregar jogo",
-              size: const Size(150, 30),
+              size: const Size(180, 30),
               fontSize: 14,
             ),
           ],
