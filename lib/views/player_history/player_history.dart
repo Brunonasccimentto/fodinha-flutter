@@ -41,7 +41,9 @@ class _PlayerHistoryState extends State<PlayerHistory> {
             child: AvatarPlayerCircle(
               data: args,
               height: 180,
-              width: 180)
+              width: 180,
+              imageFileSizeRadius: const Size.fromRadius(90)
+            )
           ),
           const SizedBox(
             height: 20,
