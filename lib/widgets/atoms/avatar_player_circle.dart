@@ -11,14 +11,14 @@ class AvatarPlayerCircle extends StatelessWidget {
   final double? width;
   final double? height;
   final double? opacity;
-  final double? radius;
+  final Size? imageFileSizeRadius;
   final EdgeInsets? margin;
   final VoidCallback? onLongPress;
   final VoidCallback? onTap; 
   final ColorFilter? filter;
 
   const AvatarPlayerCircle(
-      {required this.data, this.height, this.width, this.opacity, this.onLongPress, this.onTap, this.radius, this.margin, this.filter, Key? key, this.secondData})
+      {required this.data, this.height, this.width, this.opacity, this.onLongPress, this.onTap, this.margin, this.filter, Key? key, this.secondData, this.imageFileSizeRadius})
       : super(key: key);
 
   @override
@@ -47,9 +47,10 @@ class AvatarPlayerCircle extends StatelessWidget {
                 : data.picture.contains("/cache") ? 
                   ClipOval(
                     child: SizedBox.fromSize(
-                      size: const Size.fromRadius(40),                 
-                      child: Image.file(File(data.picture),                                                   
-                        fit: BoxFit.cover,
+                      size: imageFileSizeRadius ?? const Size.fromRadius(40),                 
+                      child: Image.file(
+                        File(data.picture),                                                   
+                        fit: BoxFit.cover,                      
                       ),
                     ),
                   )
