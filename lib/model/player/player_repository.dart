@@ -30,7 +30,6 @@ class PlayerRepository {
     } 
   }
 
-
   Future<void> createPlayer(PlayerModel player) async{
     final isarDB = await database.openDB();
 
@@ -127,4 +126,25 @@ class PlayerRepository {
     });
     }
   }
+
+  //PlayerHistory
+  Future<PlayerModel> getPlayerHistory(int playerID) async{
+    final isarDB = await database.openDB();
+
+    final playerHistory = await isarDB.playerModels.where().playerIDEqualTo(playerID).findFirst();
+
+    return playerHistory!;
+  }
+
+  Future<void> savePlayerHistoryCount(List<PlayerModel> playerList) async {
+  final isarDB = await database.openDB();
+
+  await Future.wait(playerList.map((PlayerModel item) async {
+    item.historyCount = [...item.historyCount, item.count];
+
+    await isarDB.writeTxn(() async {
+      await isarDB.playerModels.put(item);
+    });
+  }));
+}
 }
