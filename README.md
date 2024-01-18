@@ -15,7 +15,7 @@ O aplicativo deve ser capaz de criar uma partida, adicionar até no máximo 10 j
 
 
 ### Instalação
-1. Clique no arquivo fodinha-flutter.apk
+1. Clique no arquivo fodinha.apk
 2. Pesquise por raw, atalho (ctrl + f), ou no canto superior direito verá um icone para baixar o arquivo, clique nele.
 3. Mande esse arquivo para um dispositivo android e instale. "O aplicativo não tem credenciais, o dispositivo android irá acusar como possivel arquivo malicioso"
 
