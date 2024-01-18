@@ -71,10 +71,14 @@ class GameScreenEndRound extends StatelessWidget {
                         GestureDetector(
                           child: Player(
                             data: store.playerList[index],
-                            showCounter: false,            
-                            child: AvatarPlayerCircle(data: store.playerList[index],
-                            filter: gameScreenStore.playersLostRound.contains(store.playerList[index].playerID) ? 
-                            ColorFilter.mode(Colors.indigo.shade300, BlendMode.modulate) : const ColorFilter.mode(Colors.transparent, BlendMode.color)) 
+                            showCounter: false,    
+                            onLongPress: () => Navigator.of(context).pushNamed('/PlayerHistory', arguments: store.playerList[index]),        
+                            child: Hero(
+                              tag: store.playerList[index].playerID,
+                              child:  AvatarPlayerCircle(data: store.playerList[index],
+                                filter: gameScreenStore.playersLostRound.contains(store.playerList[index].playerID) ? 
+                                ColorFilter.mode(Colors.indigo.shade300, BlendMode.modulate) : const ColorFilter.mode(Colors.transparent, BlendMode.color)) ,
+                            )
                           ),
                           onTap: () {
                             gameScreenStore.playersLostRound.contains(store.playerList[index].playerID) ?
