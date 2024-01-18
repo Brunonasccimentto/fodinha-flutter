@@ -77,7 +77,7 @@ class GameScreenEndRound extends StatelessWidget {
                               tag: store.playerList[index].playerID,
                               child:  AvatarPlayerCircle(data: store.playerList[index],
                                 filter: gameScreenStore.playersLostRound.contains(store.playerList[index].playerID) ? 
-                                ColorFilter.mode(Colors.indigo.shade300, BlendMode.modulate) : const ColorFilter.mode(Colors.transparent, BlendMode.color)) ,
+                                const ColorFilter.mode(Color.fromARGB(255, 177, 80, 80), BlendMode.modulate) : const ColorFilter.mode(Colors.transparent, BlendMode.color)) ,
                             )
                           ),
                           onTap: () {
