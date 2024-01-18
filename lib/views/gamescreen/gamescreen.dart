@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fodinha_flutter/widgets/atoms/app_screen.dart';
 import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view_model.dart';
@@ -7,6 +8,8 @@ import 'package:fodinha_flutter/views/gamescreen/widgets/header.dart';
 import 'package:fodinha_flutter/views/gamescreen/widgets/player_card.dart';
 import 'package:fodinha_flutter/views/gamescreen/widgets/start_button.dart';
 import 'package:fodinha_flutter/widgets/atoms/elevated_text_buttom.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -105,8 +108,22 @@ class _GameScreenState extends State<GameScreen> {
                   }),
     
                   StartRoundButton(
-                    sum: gameScreenStore.sumAllPlayerCountValues(store.playerList), 
-                    cards: gameScreenStore.scoreboard.cards
+                    onPressed: () async { 
+                      if (gameScreenStore.sumAllPlayerCountValues(store.playerList) == gameScreenStore.scoreboard.cards) {
+                        HapticFeedback.vibrate();
+                        MotionToast.error(
+                          title: const Text("Erro"),
+                          height: 100,
+                          description: const Text("O número de rounds que cada jogador irá fazer somado, não pode ser igual ao número de cartas"),
+                          position: MotionToastPosition.top,
+                        ).show(context);
+                        return;
+                      }
+
+                      await store.saveRoundPlayerHistoryCount(store.playerList);
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushReplacementNamed(context, "/GameScreenEndRound");
+                    },
                   )                  
                 ],
               );
