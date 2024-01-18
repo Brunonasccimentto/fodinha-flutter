@@ -34,7 +34,9 @@ class AppWidget extends StatelessWidget {
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false, 
-          theme: ThemeData(
+          theme: ThemeData(          
+            fontFamily: 'Rubik',
+            textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Rubik'),
             colorScheme: ColorScheme.fromSwatch(
               primarySwatch: Colors.indigo,
               accentColor: Colors.white,
