@@ -41,11 +41,12 @@ class WinnerDialog extends StatelessWidget {
                           Text(
                             winner,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              decoration: TextDecoration.none,
+                            style: TextStyle(   
+                              decoration: TextDecoration.none,   
+                              fontFamily: Theme.of(context).textTheme.bodyMedium?.fontFamily,                      
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                           ),
                           AppAssets().trophy,
