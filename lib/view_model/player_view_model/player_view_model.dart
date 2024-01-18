@@ -114,9 +114,17 @@ abstract class PlayerViewModelBase with Store {
 
   //GameScreenEndActions
   @action
-  Future<void> updatePlayersLostRound(List<int> players) async{
+  Future<void> updatePlayersLostRound(List<int> players) async {
     await repository.updatePlayersLostRound(players);
     await getPlayerList();
   }
 
+  Future<PlayerModel> getPlayerHistory(int playerID) async {
+    final player = await repository.getPlayerHistory(playerID);
+    return player;
+  }
+
+  Future<void> saveRoundPlayerHistoryCount(List<PlayerModel> playerList) async {
+    await repository.savePlayerHistoryCount(playerList);
+  }
 }
