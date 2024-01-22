@@ -40,6 +40,7 @@ $ flutter install
 - **Definir foto ou avatar:** Para escolher um avatar toque na área colorida com as iniciais do jogador.
 - **Novo Dealer:** Para definir um novo dealer (icone de moeda roxa) pressione um jogador não dealer.
 - **Defina o número de rounds:** Para cada jogador defina o número de rounds pelos botões de - e +.
+- **Visualizar histórico:** Após iniciar um jogo, pressione o avatar de qualquer jogador para visualizar seu histórico.
 - **Defina o perdedor:** Para Selecionar o perdedor, toque nos jogadores que perderam o round.
 
 ### ScreenShots
