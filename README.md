@@ -45,29 +45,32 @@ $ flutter install
 ### ScreenShots
 
 #### Tela inicial
-<img src="assets/screenshoots/Screenshot_1702411950.png">
+<img src="assets/screenshoots/Screenshot_1705952896.png">
 
 #### Tela de jogadores
-<img src="assets/screenshoots/Screenshot_1704329211.png">
+<img src="assets/screenshoots/Screenshot_1705953068.png">
 
 #### Modal de avatares
-<img src="assets/screenshoots/Screenshot_1704329106.png">
+<img src="assets/screenshoots/Screenshot_1705953063.png">
 
 #### Jogadores arrastáveis para excluir
-<img src="assets/screenshoots/Screenshot_1704329247.png">
+<img src="assets/screenshoots/Screenshot_1705953080.png">
 
 #### Tela do jogo / Scoreboard
-<img src="assets/screenshoots/Screenshot_1704329333.png">
+<img src="assets/screenshoots/Screenshot_1705953097.png">
 
-<img src="assets/screenshoots/Screenshot_1704329502.png">
+<img src="assets/screenshoots/Screenshot_1705953184.png">
+
+#### Histórico do jogador
+<img src="assets/screenshoots/Screenshot_1705953223.png">
 
 #### Tela Fim de round
-<img src="assets/screenshoots/Screenshot_1704329391.png">
+<img src="assets/screenshoots/SScreenshot_1705953116.png">
 
-<img src="assets/screenshoots/Screenshot_1704329405.png">
+<img src="assets/screenshoots/Screenshot_1705953127.png">
 
 #### Modal do vencedor
-<img src="assets/screenshoots/Screenshot_1704330728.png">
+<img src="assets/screenshoots/Screenshot_1705953288.png">
 
 
 
