@@ -7,7 +7,6 @@ import 'package:fodinha_flutter/view_model/gamescreen_view_model/gamescreen_view
 import 'package:fodinha_flutter/view_model/player_view_model/player_view_model.dart';
 import 'package:fodinha_flutter/views/gamescreen/gamescreen.dart';
 import 'package:fodinha_flutter/views/gamescreen/gamescreen_endRound.dart';
-import 'package:fodinha_flutter/feature/loadingscreen/loadingscreen.dart';
 import 'package:fodinha_flutter/views/player_history/player_history.dart';
 import 'package:fodinha_flutter/views/playerscreen/playerscreen.dart';
 import 'package:fodinha_flutter/views/startscreen/startscreen.dart';
@@ -48,7 +47,6 @@ class AppWidget extends StatelessWidget {
           initialRoute: "/",
           routes: {
             "/": (BuildContext context) => const StartScreen(),
-            "/LoadingScreen": (BuildContext context) => const LoadingScreen(),
             "/PlayerScreen":(BuildContext context) => const PlayerScreen(),
             "/GameScreen": (BuildContext context) => const GameScreen(),
             "/GameScreenEndRound": (BuildContext context) => const GameScreenEndRound(),
